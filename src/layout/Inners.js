@@ -1,7 +1,7 @@
 import React from "react";
 
-const Inners = () => {
-  return <div>Inners</div>;
+const Inners = ({ children }) => {
+  return <div>{children}</div>;
 };
 
 export default Inners;
