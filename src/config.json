@@ -1,0 +1,4 @@
+{
+  "products_api": "https://course-api.com/react-store-products",
+  "single_product_api": "https://course-api.com/react-store-single-product?id="
+}
