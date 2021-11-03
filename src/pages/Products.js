@@ -1,39 +1,13 @@
-import React, { useCallback, useEffect } from "react";
+import React from "react";
 import Productsfilter from "../components/products/ProductsFilter";
 import Productslist from "../components/products/ProductsList";
-import config from "../config.json";
-import useFetch from "../hooks/useFetch";
-import ProductModel from "../models/ProductModel";
+import { useFiltersContext } from "../context/filters-context";
 import Dropdown from "../ui/Dropdown";
 import Toggleview from "../ui/ToggleView";
-import { normalizeBy } from "../utils/data-normalizer";
-
-const products_api = config.products_api;
 
 const Products = () => {
-  const {
-    data: products,
-    setData: setProducts,
-    isLoading,
-    error,
-    fetchData: fetchProducts,
-  } = useFetch({});
-
-  const formatProducts = useCallback(
-    (products) => {
-      const formattedData = products.map(
-        (item) => new ProductModel(item.id, item.name)
-      );
-      const normalizedData = formattedData.reduce(normalizeBy("id"), {});
-      console.log(normalizedData);
-      setProducts(normalizedData);
-    },
-    [setProducts]
-  );
-
-  useEffect(() => {
-    fetchProducts(products_api, null, formatProducts);
-  }, [fetchProducts, formatProducts]);
+  const { filteredProducts, isLoading, error } = useFiltersContext();
+  const productsCount = filteredProducts?.length;
 
   return (
     <div>
@@ -43,10 +17,12 @@ const Products = () => {
       <div>
         <div>
           <Toggleview />
-          products count
+          {!isLoading && !error && productsCount}
           <Dropdown />
         </div>
-        <Productslist />
+        {isLoading && <div>Loading...</div>}
+        {error && <div>Something went wrong!</div>}
+        {productsCount > 0 && <Productslist products={filteredProducts} />}
       </div>
     </div>
   );

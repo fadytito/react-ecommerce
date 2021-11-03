@@ -1,5 +1,6 @@
 import { Route, Switch } from "react-router";
 import "./App.css";
+import { FiltersProvider } from "./context/filters-context";
 import Footer from "./layout/Footer";
 import Header from "./layout/Header";
 import Inners from "./layout/Inners";
@@ -20,8 +21,10 @@ function App() {
           <Route path="/:inners">
             <Inners>
               <Switch>
-                <Route path="/products" exact>
-                  <Products />
+                <Route path="/products">
+                  <FiltersProvider>
+                    <Products />
+                  </FiltersProvider>
                 </Route>
                 <Route path="/products/:id">
                   <Productdetails />

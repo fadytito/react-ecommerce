@@ -1,10 +1,17 @@
 import React from "react";
+import ProductModel from "../../models/ProductModel";
 import Productitem from "./ProductItem";
 
-const Productslist = () => {
+const Productslist = ({ products }) => {
+  const formattedProducts = products.map((item) => {
+    const { id, name } = item;
+    return new ProductModel(id, name);
+  });
   return (
     <div>
-      <Productitem />
+      {formattedProducts.map((product) => (
+        <Productitem key={product.id} {...product} />
+      ))}
     </div>
   );
 };
