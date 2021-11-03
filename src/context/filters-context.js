@@ -1,5 +1,11 @@
 import qs from "qs";
-import React, { useCallback, useContext, useEffect, useReducer } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+} from "react";
 import { useHistory, useLocation } from "react-router";
 import {
   FILTER_PRODUCTS,
@@ -9,22 +15,46 @@ import {
 import productsReducer from "../components/products/products-reducer";
 import config from "../config.json";
 import useFetch from "./../hooks/useFetch";
+import omitBy from "./../utils/omitBy";
 
-const FiltersContext = React.createContext();
+const productsInitialValues = {
+  allProducts: [],
+  filteredProducts: [],
+  filters: {
+    name: "",
+    category: "all",
+    company: "all",
+    color: "all",
+  },
+};
+
+const ProductsContext = React.createContext(productsInitialValues);
 
 const products_api = config.products_api;
 
-const FiltersProvider = ({ children }) => {
+const ProductsProvider = ({ children }) => {
   const { isLoading, error, fetchData: fetchProducts } = useFetch();
-  const [products, dispatchProducts] = useReducer(productsReducer, {
-    allProducts: [],
-    filteredProducts: [],
-    filters: {},
-  });
+  const [products, dispatchProducts] = useReducer(
+    productsReducer,
+    productsInitialValues
+  );
 
   const { allProducts, filteredProducts, filters } = products;
   const { search, pathname } = useLocation();
   const history = useHistory();
+
+  const allPrices = useMemo(
+    () => allProducts.map((p) => p.price),
+    [allProducts]
+  );
+  const minPrice = useMemo(
+    () => (allPrices.length ? Math.min(...allPrices) : 0),
+    [allPrices]
+  );
+  const maxPrice = useMemo(
+    () => (allPrices.length ? Math.max(...allPrices) : 0),
+    [allPrices]
+  );
 
   const loadProducts = useCallback((products) => {
     dispatchProducts({ type: LOAD_PRODUCTS, payload: products });
@@ -35,10 +65,10 @@ const FiltersProvider = ({ children }) => {
   }, [fetchProducts, loadProducts]);
 
   useEffect(() => {
-    if (search) {
-      const urlFilters = qs.parse(search, { ignoreQueryPrefix: true });
-      dispatchProducts({ type: UPDATE_FILTERS, payload: urlFilters });
-    }
+    const urlFilters = search
+      ? qs.parse(search, { ignoreQueryPrefix: true })
+      : productsInitialValues.filters;
+    dispatchProducts({ type: UPDATE_FILTERS, payload: urlFilters });
   }, [search]);
 
   useEffect(() => {
@@ -47,33 +77,54 @@ const FiltersProvider = ({ children }) => {
     }
   }, [allProducts, filters]);
 
-  const filtersChangeHandler = (filtersQuery) => {
-    const qs = `?${new URLSearchParams(filtersQuery)}`;
+  const filtersChangeHandler = useCallback(
+    (filtersQuery) => {
+      const cleanQuery = omitBy(
+        filtersQuery,
+        null,
+        undefined,
+        "",
+        "all",
+        maxPrice.toString()
+      );
+      const qs = `?${new URLSearchParams(cleanQuery)}`;
+      history.push({
+        pathname,
+        search: qs,
+      });
+    },
+    [maxPrice, history]
+  );
+
+  const clearFiltersHandler = useCallback(() => {
     history.push({
       pathname,
-      search: qs,
+      search: "",
     });
-  };
+  }, [history]);
 
   return (
-    <FiltersContext.Provider
+    <ProductsContext.Provider
       value={{
         allProducts,
         filteredProducts,
         isLoading,
         error,
         filters,
+        minPrice,
+        maxPrice,
         filtersChangeHandler,
+        clearFiltersHandler,
       }}
     >
       {children}
-    </FiltersContext.Provider>
+    </ProductsContext.Provider>
   );
 };
 
-const useFiltersContext = () => {
-  return useContext(FiltersContext);
+const useProductsContext = () => {
+  return useContext(ProductsContext);
 };
 
-export { FiltersProvider, useFiltersContext };
+export { ProductsProvider, useProductsContext };
 

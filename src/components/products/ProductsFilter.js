@@ -1,5 +1,5 @@
 import React from "react";
-import { useFiltersContext } from "../../context/filters-context";
+import { useProductsContext } from "../../context/filters-context";
 
 const Productsfilter = ({
   allCategories,
@@ -8,7 +8,8 @@ const Productsfilter = ({
   minPrice,
   maxPrice,
 }) => {
-  const { filters, filtersChangeHandler } = useFiltersContext();
+  const { filters, filtersChangeHandler, clearFiltersHandler } =
+    useProductsContext();
   const { name, category, company, color, priceRange, shipping } = filters;
 
   const priceRangeValue = priceRange ? priceRange : maxPrice;
@@ -141,6 +142,8 @@ const Productsfilter = ({
         />
         <label htmlFor="shipping">Free Shipping</label>
       </div>
+
+      <button onClick={clearFiltersHandler}>clear filters</button>
     </div>
   );
 };

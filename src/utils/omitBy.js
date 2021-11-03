@@ -14,7 +14,6 @@ const omitBy = (obj, ...args) => {
     }
   };
   filterObj();
-  console.log(filteredObj);
   return filteredObj;
 };
 

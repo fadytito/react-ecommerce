@@ -1,21 +1,33 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Productsfilter from "../components/products/ProductsFilter";
 import Productslist from "../components/products/ProductsList";
-import { useFiltersContext } from "../context/filters-context";
+import { useProductsContext } from "../context/filters-context";
 import Dropdown from "../ui/Dropdown";
 import Toggleview from "../ui/ToggleView";
 
 const Products = () => {
-  const { allProducts, filteredProducts, isLoading, error } =
-    useFiltersContext();
+  const {
+    allProducts,
+    filteredProducts,
+    minPrice,
+    maxPrice,
+    isLoading,
+    error,
+  } = useProductsContext();
   const productsCount = filteredProducts.length;
 
-  const allCategories = [...new Set(allProducts.map((p) => p.category))];
-  const allCompanies = [...new Set(allProducts.map((p) => p.company))];
-  const allColors = [...new Set(allProducts.map((p) => p.colors).flat())];
-  const allPrices = allProducts.map((p) => p.price);
-  const minPrice = allPrices.length ? Math.min(...allPrices) : 0;
-  const maxPrice = allPrices.length ? Math.max(...allPrices) : 0;
+  const allCategories = useMemo(
+    () => [...new Set(allProducts.map((p) => p.category))],
+    [allProducts]
+  );
+  const allCompanies = useMemo(
+    () => [...new Set(allProducts.map((p) => p.company))],
+    [allProducts]
+  );
+  const allColors = useMemo(
+    () => [...new Set(allProducts.map((p) => p.colors).flat())],
+    [allProducts]
+  );
 
   return (
     <div>
