@@ -19,7 +19,7 @@ const FiltersProvider = ({ children }) => {
   const [products, dispatchProducts] = useReducer(productsReducer, {
     allProducts: [],
     filteredProducts: [],
-    filters: { name: "" },
+    filters: {},
   });
 
   const { allProducts, filteredProducts, filters } = products;
@@ -58,6 +58,7 @@ const FiltersProvider = ({ children }) => {
   return (
     <FiltersContext.Provider
       value={{
+        allProducts,
         filteredProducts,
         isLoading,
         error,
@@ -75,3 +76,4 @@ const useFiltersContext = () => {
 };
 
 export { FiltersProvider, useFiltersContext };
+

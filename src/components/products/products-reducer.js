@@ -11,9 +11,38 @@ const productsReducer = (state, action) => {
     case LOAD_PRODUCTS:
       return { ...state, allProducts: payload };
     case FILTER_PRODUCTS:
-      const { name } = payload;
-      let filteredProducts;
-      filteredProducts = allProducts.filter((item) => item.name.includes(name));
+      const { name, category, company, color, priceRange, shipping } = payload;
+      let filteredProducts = allProducts;
+      if (name) {
+        filteredProducts = filteredProducts.filter((item) =>
+          item.name.includes(name)
+        );
+      }
+      if (category && category !== "all") {
+        filteredProducts = filteredProducts.filter(
+          (item) => item.category === category
+        );
+      }
+      if (company && company !== "all") {
+        filteredProducts = filteredProducts.filter(
+          (item) => item.company === company
+        );
+      }
+      if (color && color !== "all") {
+        filteredProducts = filteredProducts.filter((item) =>
+          item.colors.indexOf(color)
+        );
+      }
+      if (priceRange) {
+        filteredProducts = filteredProducts.filter(
+          (item) => item.price <= priceRange
+        );
+      }
+      if (shipping) {
+        filteredProducts = filteredProducts.filter(
+          (item) => item.shipping === Boolean(shipping)
+        );
+      }
       return { ...state, filteredProducts };
     case UPDATE_FILTERS:
       return { ...state, filters: payload };
