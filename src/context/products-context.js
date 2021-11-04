@@ -46,7 +46,7 @@ const ProductsProvider = ({ children }) => {
 
   const urlFilters = useMemo(() => {
     const urlFiltersObj = qs.parse(search, { ignoreQueryPrefix: true });
-    return omitBy(urlFiltersObj, null, undefined, "", "all");
+    return urlFiltersObj;
   }, [search]);
 
   const allPrices = useMemo(
