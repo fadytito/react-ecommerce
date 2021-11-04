@@ -7,6 +7,7 @@ import {
 const productsReducer = (state, action) => {
   const { type, payload } = action;
   const { allProducts, maxPrice } = state;
+
   if (type === UPDATE_FILTERS) {
     let { name, category, company, color, priceRange } = payload;
     if (!name) name = "";
@@ -40,7 +41,7 @@ const productsReducer = (state, action) => {
           shipping,
           sortingVal,
         } = payload;
-        let filteredProducts = allProducts;
+        let filteredProducts = [...allProducts];
         if (name) {
           filteredProducts = filteredProducts.filter((item) =>
             item.name.includes(name)
