@@ -5,7 +5,6 @@ import React, {
   useEffect,
   useMemo,
   useReducer,
-  useRef,
 } from "react";
 import { useHistory, useLocation } from "react-router";
 import {
@@ -42,11 +41,16 @@ const ProductsProvider = ({ children }) => {
     productsInitialValues
   );
 
-  const cleanFilterQueryRef = useRef();
-
   const { allProducts, filters } = products;
   const { search, pathname } = useLocation();
   const history = useHistory();
+
+  const urlFilters = useMemo(() => {
+    const urlFiltersObj = search
+      ? qs.parse(search, { ignoreQueryPrefix: true })
+      : productsInitialValues.filters;
+    return omitBy(urlFiltersObj, null, undefined, "", "all");
+  }, [search]);
 
   const allPrices = useMemo(
     () => allProducts.map((p) => p.price),
@@ -70,9 +74,6 @@ const ProductsProvider = ({ children }) => {
   }, [fetchProducts, loadProducts]);
 
   useEffect(() => {
-    const urlFilters = search
-      ? qs.parse(search, { ignoreQueryPrefix: true })
-      : productsInitialValues.filters;
     const sortingVal = Object.keys(PRODUCTS_SORT_OPTIONS).find(
       (key) =>
         PRODUCTS_SORT_OPTIONS[key].value.sortingBy === urlFilters.sortingBy &&
@@ -82,7 +83,7 @@ const ProductsProvider = ({ children }) => {
       type: UPDATE_FILTERS,
       payload: { ...urlFilters, sortingVal },
     });
-  }, [search]);
+  }, [search, urlFilters]);
 
   useEffect(() => {
     if (allProducts.length) {
@@ -104,17 +105,10 @@ const ProductsProvider = ({ children }) => {
   const filtersChangeHandler = useCallback(
     (filtersQuery) => {
       const { priceRange } = filtersQuery;
-      cleanFilterQueryRef.current = omitBy(
-        filtersQuery,
-        null,
-        undefined,
-        "",
-        "all"
-      );
-      if (priceRange === maxPrice.toString())
-        delete cleanFilterQueryRef.current.priceRange;
-      delete cleanFilterQueryRef.current.sortingVal;
-      pushSearchQuery(cleanFilterQueryRef.current);
+      const cleanQuery = omitBy(filtersQuery, null, undefined, "", "all");
+      if (priceRange === maxPrice.toString()) delete cleanQuery.priceRange;
+      delete cleanQuery.sortingVal;
+      pushSearchQuery(cleanQuery);
     },
     [maxPrice, pushSearchQuery]
   );
@@ -123,20 +117,16 @@ const ProductsProvider = ({ children }) => {
     (val) => {
       if (val) {
         const sortingObj = PRODUCTS_SORT_OPTIONS[val].value;
-        pushSearchQuery({ ...cleanFilterQueryRef.current, ...sortingObj });
+        pushSearchQuery({ ...urlFilters, ...sortingObj });
       }
     },
-    [pushSearchQuery]
+    [pushSearchQuery, urlFilters]
   );
 
   const clearFiltersHandler = useCallback(() => {
-    const { sortingBy, sortingDir } = qs.parse(search, {
-      ignoreQueryPrefix: true,
-    });
-    cleanFilterQueryRef.current = sortingBy ? { sortingBy, sortingDir } : null;
-
-    pushSearchQuery(cleanFilterQueryRef.current);
-  }, [pushSearchQuery, search]);
+    const { sortingBy, sortingDir } = urlFilters;
+    pushSearchQuery({ sortingBy, sortingDir });
+  }, [pushSearchQuery, urlFilters]);
 
   return (
     <ProductsContext.Provider
