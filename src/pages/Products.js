@@ -67,7 +67,6 @@ const Products = () => {
           <Dropdown
             options={sortingDropdownOptionsArr}
             value={sortingVal}
-            defaultValue={"Sort By"}
             onSelectChange={selectChangeHandler}
           />
         </div>

@@ -27,6 +27,7 @@ const productsInitialValues = {
     category: "all",
     company: "all",
     color: "all",
+    ...PRODUCTS_SORT_OPTIONS[2].value,
   },
 };
 
@@ -129,15 +130,12 @@ const ProductsProvider = ({ children }) => {
   );
 
   const clearFiltersHandler = useCallback(() => {
-    const urlFilters = qs.parse(search, { ignoreQueryPrefix: true });
-    const { sortingBy, sortingDir } = urlFilters;
-    if (sortingBy) {
-      cleanFilterQueryRef.current = { sortingBy, sortingDir };
-      pushSearchQuery(cleanFilterQueryRef.current);
-    } else {
-      cleanFilterQueryRef.current = null;
-      pushSearchQuery();
-    }
+    const { sortingBy, sortingDir } = qs.parse(search, {
+      ignoreQueryPrefix: true,
+    });
+    cleanFilterQueryRef.current = sortingBy ? { sortingBy, sortingDir } : null;
+
+    pushSearchQuery(cleanFilterQueryRef.current);
   }, [pushSearchQuery, search]);
 
   return (
