@@ -10,10 +10,10 @@ import { useHistory, useLocation } from "react-router";
 import {
   FILTER_PRODUCTS,
   LOAD_PRODUCTS,
+  SORT_PRODUCTS,
   UPDATE_FILTERS,
 } from "../actions/products-actions";
 import config from "../config.json";
-import PRODUCTS_SORT_OPTIONS from "../constants/products-constants";
 import useFetch from "../hooks/useFetch";
 import productsReducer from "../reducers/products-reducer";
 import omitBy from "../utils/omitBy";
@@ -26,7 +26,6 @@ const productsInitialValues = {
     category: "all",
     company: "all",
     color: "all",
-    ...PRODUCTS_SORT_OPTIONS[2].value,
   },
 };
 
@@ -42,13 +41,11 @@ const ProductsProvider = ({ children }) => {
   );
 
   const { allProducts, filters } = products;
-  const { search, pathname } = useLocation();
   const history = useHistory();
+  const { search, pathname } = useLocation();
 
   const urlFilters = useMemo(() => {
-    const urlFiltersObj = search
-      ? qs.parse(search, { ignoreQueryPrefix: true })
-      : productsInitialValues.filters;
+    const urlFiltersObj = qs.parse(search, { ignoreQueryPrefix: true });
     return omitBy(urlFiltersObj, null, undefined, "", "all");
   }, [search]);
 
@@ -74,16 +71,12 @@ const ProductsProvider = ({ children }) => {
   }, [fetchProducts, loadProducts]);
 
   useEffect(() => {
-    const sortingVal = Object.keys(PRODUCTS_SORT_OPTIONS).find(
-      (key) =>
-        PRODUCTS_SORT_OPTIONS[key].value.sortingBy === urlFilters.sortingBy &&
-        PRODUCTS_SORT_OPTIONS[key].value.sortingDir === urlFilters.sortingDir
-    );
+    if (!urlFilters) return;
     dispatchProducts({
       type: UPDATE_FILTERS,
-      payload: { ...urlFilters, sortingVal },
+      payload: urlFilters,
     });
-  }, [search, urlFilters]);
+  }, [urlFilters]);
 
   useEffect(() => {
     if (allProducts.length) {
@@ -107,26 +100,18 @@ const ProductsProvider = ({ children }) => {
       const { priceRange } = filtersQuery;
       const cleanQuery = omitBy(filtersQuery, null, undefined, "", "all");
       if (priceRange === maxPrice.toString()) delete cleanQuery.priceRange;
-      delete cleanQuery.sortingVal;
       pushSearchQuery(cleanQuery);
     },
     [maxPrice, pushSearchQuery]
   );
 
-  const sortingChangeHandler = useCallback(
-    (val) => {
-      if (val) {
-        const sortingObj = PRODUCTS_SORT_OPTIONS[val].value;
-        pushSearchQuery({ ...urlFilters, ...sortingObj });
-      }
-    },
-    [pushSearchQuery, urlFilters]
-  );
+  const sortingChangeHandler = useCallback((val) => {
+    dispatchProducts({ type: SORT_PRODUCTS, payload: val });
+  }, []);
 
   const clearFiltersHandler = useCallback(() => {
-    const { sortingBy, sortingDir } = urlFilters;
-    pushSearchQuery({ sortingBy, sortingDir });
-  }, [pushSearchQuery, urlFilters]);
+    pushSearchQuery();
+  }, [pushSearchQuery]);
 
   return (
     <ProductsContext.Provider
@@ -151,3 +136,4 @@ const useProductsContext = () => {
 };
 
 export { ProductsProvider, useProductsContext };
+

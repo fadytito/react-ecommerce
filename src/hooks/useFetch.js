@@ -32,7 +32,7 @@ const useFetch = () => {
         } else {
           setData(tempProducts);
         }
-      }, 2000);
+      }, 1000);
     } catch (err) {
       setError(err.message);
     }

@@ -7,7 +7,7 @@ import PRODUCTS_SORT_OPTIONS from "./../constants/products-constants";
 
 const Products = () => {
   const {
-    products: { allProducts, filters, filteredProducts },
+    products: { allProducts, filteredProducts, sortingVal },
     sortingChangeHandler,
     minPrice,
     maxPrice,
@@ -19,8 +19,6 @@ const Products = () => {
   );
 
   const productsCount = filteredProducts.length;
-
-  const { sortingVal } = filters;
 
   const sortingDropdownOptionsArr = useMemo(
     () =>
