@@ -2,7 +2,7 @@ import {
   FILTER_PRODUCTS,
   LOAD_PRODUCTS,
   UPDATE_FILTERS,
-} from "./products-actions";
+} from "../actions/products-actions";
 
 const productsReducer = (state, action) => {
   const { type, payload } = action;

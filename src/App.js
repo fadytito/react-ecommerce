@@ -1,6 +1,6 @@
 import { Route, Switch } from "react-router";
 import "./App.css";
-import { ProductsProvider } from "./context/filters-context";
+import { ProductsProvider } from "./context/products-context";
 import Footer from "./layout/Footer";
 import Header from "./layout/Header";
 import Inners from "./layout/Inners";

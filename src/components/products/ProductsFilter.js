@@ -1,5 +1,5 @@
 import React from "react";
-import { useProductsContext } from "../../context/filters-context";
+import { useProductsContext } from "../../context/products-context";
 
 const Productsfilter = ({
   allCategories,

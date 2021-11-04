@@ -11,12 +11,12 @@ import {
   FILTER_PRODUCTS,
   LOAD_PRODUCTS,
   UPDATE_FILTERS,
-} from "../components/products/products-actions";
-import productsReducer from "../components/products/products-reducer";
+} from "../actions/products-actions";
 import config from "../config.json";
-import PRODUCTS_SORT_OPTIONS from "./../components/products/products-constants";
-import useFetch from "./../hooks/useFetch";
-import omitBy from "./../utils/omitBy";
+import PRODUCTS_SORT_OPTIONS from "../constants/products-constants";
+import useFetch from "../hooks/useFetch";
+import productsReducer from "../reducers/products-reducer";
+import omitBy from "../utils/omitBy";
 
 const productsInitialValues = {
   allProducts: [],
@@ -151,4 +151,3 @@ const useProductsContext = () => {
 };
 
 export { ProductsProvider, useProductsContext };
-
