@@ -14,6 +14,7 @@ import {
 } from "../components/products/products-actions";
 import productsReducer from "../components/products/products-reducer";
 import config from "../config.json";
+import PRODUCTS_SORT_OPTIONS from "./../components/products/products-constants";
 import useFetch from "./../hooks/useFetch";
 import omitBy from "./../utils/omitBy";
 
@@ -39,7 +40,7 @@ const ProductsProvider = ({ children }) => {
     productsInitialValues
   );
 
-  const { allProducts, filteredProducts, filters } = products;
+  const { allProducts, filters } = products;
   const { search, pathname } = useLocation();
   const history = useHistory();
 
@@ -68,7 +69,15 @@ const ProductsProvider = ({ children }) => {
     const urlFilters = search
       ? qs.parse(search, { ignoreQueryPrefix: true })
       : productsInitialValues.filters;
-    dispatchProducts({ type: UPDATE_FILTERS, payload: urlFilters });
+    const sortingVal = Object.keys(PRODUCTS_SORT_OPTIONS).find(
+      (key) =>
+        PRODUCTS_SORT_OPTIONS[key].value.sortingBy === urlFilters.sortingBy &&
+        PRODUCTS_SORT_OPTIONS[key].value.sortingDir === urlFilters.sortingDir
+    );
+    dispatchProducts({
+      type: UPDATE_FILTERS,
+      payload: { ...urlFilters, sortingVal },
+    });
   }, [search]);
 
   useEffect(() => {
@@ -77,43 +86,51 @@ const ProductsProvider = ({ children }) => {
     }
   }, [allProducts, filters]);
 
-  const filtersChangeHandler = useCallback(
-    (filtersQuery) => {
-      const cleanQuery = omitBy(
-        filtersQuery,
-        null,
-        undefined,
-        "",
-        "all",
-        maxPrice.toString()
-      );
-      const qs = `?${new URLSearchParams(cleanQuery)}`;
+  const pushSearchQuery = useCallback(
+    (query) => {
+      const qs = query ? `?${new URLSearchParams(query)}` : "";
       history.push({
         pathname,
         search: qs,
       });
     },
-    [maxPrice, history]
+    [history, pathname]
+  );
+
+  const filtersChangeHandler = useCallback(
+    (filtersQuery) => {
+      const { priceRange } = filtersQuery;
+      const cleanQuery = omitBy(filtersQuery, null, undefined, "", "all");
+      if (priceRange === maxPrice.toString()) delete cleanQuery.priceRange;
+      pushSearchQuery(cleanQuery);
+    },
+    [maxPrice, pushSearchQuery]
+  );
+
+  const sortingChangeHandler = useCallback(
+    (val) => {
+      if (val) {
+        const sortingObj = PRODUCTS_SORT_OPTIONS[val].value;
+        pushSearchQuery(sortingObj);
+      }
+    },
+    [pushSearchQuery]
   );
 
   const clearFiltersHandler = useCallback(() => {
-    history.push({
-      pathname,
-      search: "",
-    });
-  }, [history]);
+    pushSearchQuery();
+  }, [pushSearchQuery]);
 
   return (
     <ProductsContext.Provider
       value={{
-        allProducts,
-        filteredProducts,
-        isLoading,
-        error,
-        filters,
+        products,
         minPrice,
         maxPrice,
+        isLoading,
+        error,
         filtersChangeHandler,
+        sortingChangeHandler,
         clearFiltersHandler,
       }}
     >

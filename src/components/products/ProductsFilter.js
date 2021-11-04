@@ -8,8 +8,11 @@ const Productsfilter = ({
   minPrice,
   maxPrice,
 }) => {
-  const { filters, filtersChangeHandler, clearFiltersHandler } =
-    useProductsContext();
+  const {
+    products: { filters },
+    filtersChangeHandler,
+    clearFiltersHandler,
+  } = useProductsContext();
   const { name, category, company, color, priceRange, shipping } = filters;
 
   const priceRangeValue = priceRange ? priceRange : maxPrice;

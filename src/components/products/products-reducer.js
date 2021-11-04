@@ -14,17 +14,32 @@ const productsReducer = (state, action) => {
     if (!company) company = "all";
     if (!color) color = "all";
     if (!priceRange) priceRange = maxPrice;
+
     return {
       ...state,
-      filters: { ...payload, name, category, company, color, priceRange },
+      filters: {
+        ...payload,
+        name,
+        category,
+        company,
+        color,
+        priceRange,
+      },
     };
   } else {
     switch (type) {
       case LOAD_PRODUCTS:
         return { ...state, allProducts: payload };
       case FILTER_PRODUCTS:
-        const { name, category, company, color, priceRange, shipping } =
-          payload;
+        const {
+          name,
+          category,
+          company,
+          color,
+          priceRange,
+          shipping,
+          sortingVal,
+        } = payload;
         let filteredProducts = allProducts;
         if (name) {
           filteredProducts = filteredProducts.filter((item) =>
@@ -56,12 +71,34 @@ const productsReducer = (state, action) => {
             (item) => item.shipping === Boolean(shipping)
           );
         }
+        if (sortingVal || sortingVal === 0) {
+          switch (sortingVal) {
+            case "0":
+              filteredProducts = filteredProducts.sort(
+                (a, b) => a.price - b.price
+              );
+              break;
+            case "1":
+              filteredProducts = filteredProducts.sort(
+                (a, b) => b.price - a.price
+              );
+              break;
+            case "2":
+              filteredProducts = filteredProducts.sort((a, b) =>
+                a.name.localeCompare(b.name)
+              );
+              break;
+            case "3":
+              filteredProducts = filteredProducts
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .reverse();
+              break;
+            default:
+              return filteredProducts;
+          }
+        }
         return { ...state, filteredProducts };
-      case UPDATE_FILTERS:
-        return {
-          ...state,
-          filters: { ...payload, name, category, company, color },
-        };
+
       default:
         return state;
     }
