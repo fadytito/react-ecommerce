@@ -129,8 +129,14 @@ const ProductsProvider = ({ children }) => {
   );
 
   const clearFiltersHandler = useCallback(() => {
-    pushSearchQuery();
-  }, [pushSearchQuery]);
+    const urlFilters = qs.parse(search, { ignoreQueryPrefix: true });
+    const { sortingBy, sortingDir } = urlFilters;
+    if (sortingBy) {
+      pushSearchQuery({ sortingBy, sortingDir });
+    } else {
+      pushSearchQuery();
+    }
+  }, [pushSearchQuery, search]);
 
   return (
     <ProductsContext.Provider
