@@ -132,8 +132,10 @@ const ProductsProvider = ({ children }) => {
     const urlFilters = qs.parse(search, { ignoreQueryPrefix: true });
     const { sortingBy, sortingDir } = urlFilters;
     if (sortingBy) {
-      pushSearchQuery({ sortingBy, sortingDir });
+      cleanFilterQueryRef.current = { sortingBy, sortingDir };
+      pushSearchQuery(cleanFilterQueryRef.current);
     } else {
+      cleanFilterQueryRef.current = null;
       pushSearchQuery();
     }
   }, [pushSearchQuery, search]);
