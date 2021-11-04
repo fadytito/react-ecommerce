@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useMemo,
   useReducer,
+  useRef,
 } from "react";
 import { useHistory, useLocation } from "react-router";
 import {
@@ -39,6 +40,8 @@ const ProductsProvider = ({ children }) => {
     productsReducer,
     productsInitialValues
   );
+
+  const cleanFilterQueryRef = useRef();
 
   const { allProducts, filters } = products;
   const { search, pathname } = useLocation();
@@ -100,9 +103,17 @@ const ProductsProvider = ({ children }) => {
   const filtersChangeHandler = useCallback(
     (filtersQuery) => {
       const { priceRange } = filtersQuery;
-      const cleanQuery = omitBy(filtersQuery, null, undefined, "", "all");
-      if (priceRange === maxPrice.toString()) delete cleanQuery.priceRange;
-      pushSearchQuery(cleanQuery);
+      cleanFilterQueryRef.current = omitBy(
+        filtersQuery,
+        null,
+        undefined,
+        "",
+        "all"
+      );
+      if (priceRange === maxPrice.toString())
+        delete cleanFilterQueryRef.current.priceRange;
+      delete cleanFilterQueryRef.current.sortingVal;
+      pushSearchQuery(cleanFilterQueryRef.current);
     },
     [maxPrice, pushSearchQuery]
   );
@@ -111,7 +122,7 @@ const ProductsProvider = ({ children }) => {
     (val) => {
       if (val) {
         const sortingObj = PRODUCTS_SORT_OPTIONS[val].value;
-        pushSearchQuery(sortingObj);
+        pushSearchQuery({ ...cleanFilterQueryRef.current, ...sortingObj });
       }
     },
     [pushSearchQuery]
