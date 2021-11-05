@@ -6,7 +6,9 @@ const Dropdown = ({
   defaultValue = "",
   onSelectChange,
 }) => {
-  const [selectInputVal, setSelectInputVal] = useState(defaultValue);
+  const [selectInputVal, setSelectInputVal] = useState(
+    value ? value : defaultValue
+  );
 
   useEffect(() => {
     if (value) {
@@ -15,9 +17,8 @@ const Dropdown = ({
   }, [value]);
 
   useEffect(() => {
-    if (selectInputVal === defaultValue) return;
     onSelectChange(selectInputVal);
-  }, [selectInputVal, onSelectChange, defaultValue]);
+  }, [selectInputVal, onSelectChange]);
 
   const selectInputChangeHandler = (e) => {
     setSelectInputVal(e.target.value);

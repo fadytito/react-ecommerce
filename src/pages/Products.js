@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import Productsfilter from "../components/products/ProductsFilter";
-import Productslist from "../components/products/ProductsList";
+import { Productsfilter, Productslist } from "../components/products";
 import { useProductsContext } from "../context/products-context";
-import Dropdown from "../ui/Dropdown";
+import { Dropdown } from "../ui";
 import PRODUCTS_SORT_OPTIONS from "./../constants/products-constants";
 
 const Products = () => {

@@ -10,21 +10,22 @@ const productsReducer = (state, action) => {
   const { allProducts, filteredProducts, maxPrice } = state;
 
   if (type === UPDATE_FILTERS) {
-    let { name, category, company, color, priceRange } = payload;
+    let { name, category, company, color, priceRange, shipping } = payload;
     if (!name) name = "";
     if (!category) category = "all";
     if (!company) company = "all";
     if (!color) color = "all";
+    if (!shipping) shipping = "all";
     if (!priceRange) priceRange = maxPrice;
 
     return {
       ...state,
       filters: {
-        ...payload,
         name,
         category,
         company,
         color,
+        shipping,
         priceRange,
       },
     };
@@ -37,33 +38,33 @@ const productsReducer = (state, action) => {
           payload;
         let updatedFilteredProducts = [...allProducts];
         if (name) {
-          updatedFilteredProducts = filteredProducts.filter((item) =>
+          updatedFilteredProducts = updatedFilteredProducts.filter((item) =>
             item.name.includes(name)
           );
         }
-        if (category && category !== "all") {
-          updatedFilteredProducts = filteredProducts.filter(
+        if (category !== "all") {
+          updatedFilteredProducts = updatedFilteredProducts.filter(
             (item) => item.category === category
           );
         }
-        if (company && company !== "all") {
-          updatedFilteredProducts = filteredProducts.filter(
+        if (company !== "all") {
+          updatedFilteredProducts = updatedFilteredProducts.filter(
             (item) => item.company === company
           );
         }
-        if (color && color !== "all") {
-          updatedFilteredProducts = filteredProducts.filter((item) =>
+        if (color !== "all") {
+          updatedFilteredProducts = updatedFilteredProducts.filter((item) =>
             item.colors.indexOf(color)
           );
         }
-        if (priceRange) {
-          updatedFilteredProducts = filteredProducts.filter(
-            (item) => item.price <= priceRange
+        if (shipping !== "all") {
+          updatedFilteredProducts = updatedFilteredProducts.filter(
+            (item) => item.shipping === Boolean(shipping)
           );
         }
-        if (shipping) {
-          updatedFilteredProducts = filteredProducts.filter(
-            (item) => item.shipping === Boolean(shipping)
+        if (priceRange !== maxPrice) {
+          updatedFilteredProducts = updatedFilteredProducts.filter(
+            (item) => item.price <= priceRange
           );
         }
 
@@ -72,27 +73,27 @@ const productsReducer = (state, action) => {
         let updatedSortedProducts = [...filteredProducts];
         switch (payload) {
           case "0":
-            updatedSortedProducts = filteredProducts.sort(
+            updatedSortedProducts = updatedSortedProducts.sort(
               (a, b) => a.price - b.price
             );
             break;
           case "1":
-            updatedSortedProducts = filteredProducts.sort(
+            updatedSortedProducts = updatedSortedProducts.sort(
               (a, b) => b.price - a.price
             );
             break;
           case "2":
-            updatedSortedProducts = filteredProducts.sort((a, b) =>
+            updatedSortedProducts = updatedSortedProducts.sort((a, b) =>
               a.name.localeCompare(b.name)
             );
             break;
           case "3":
-            updatedSortedProducts = filteredProducts
+            updatedSortedProducts = updatedSortedProducts
               .sort((a, b) => a.name.localeCompare(b.name))
               .reverse();
             break;
           default:
-            return filteredProducts;
+            return updatedSortedProducts;
         }
         return { ...state, filteredProducts: updatedSortedProducts };
       default:

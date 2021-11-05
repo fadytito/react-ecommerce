@@ -27,6 +27,7 @@ const productsInitialValues = {
     company: "all",
     color: "all",
   },
+  sortingVal: "2",
 };
 
 const ProductsContext = React.createContext(productsInitialValues);

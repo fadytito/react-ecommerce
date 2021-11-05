@@ -19,10 +19,12 @@ const Productsfilter = ({
 
   const inputChangeHandler = (e) => {
     const { name, value, checked } = e.target;
+
     const updatedFilters = {
       ...filters,
       [name]: value,
-      shipping: name === "shipping" && checked ? value : "",
+      shipping:
+        name === "shipping" ? (!checked ? "all" : "free") : filters.shipping,
     };
     filtersChangeHandler(updatedFilters);
   };
@@ -139,7 +141,7 @@ const Productsfilter = ({
           type="checkbox"
           name="shipping"
           id="shipping"
-          checked={shipping === "free" ? true : false}
+          checked={shipping === "free"}
           value="free"
           onChange={inputChangeHandler}
         />

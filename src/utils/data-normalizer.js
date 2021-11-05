@@ -8,4 +8,7 @@ const normalizeBy = (key) => {
   };
 };
 
-export { normalizeBy };
+const normalizeById = normalizeBy("ids");
+
+export { normalizeBy, normalizeById };
+
