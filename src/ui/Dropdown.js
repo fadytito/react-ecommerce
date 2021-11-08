@@ -4,6 +4,7 @@ const Dropdown = ({
   options,
   value = "",
   defaultValue = "",
+  styleClass,
   onSelectChange,
 }) => {
   const [selectInputVal, setSelectInputVal] = useState(
@@ -24,8 +25,12 @@ const Dropdown = ({
     setSelectInputVal(e.target.value);
   };
   return (
-    <div>
-      <select value={selectInputVal} onChange={selectInputChangeHandler}>
+    <React.Fragment>
+      <select
+        value={selectInputVal}
+        onChange={selectInputChangeHandler}
+        className={styleClass}
+      >
         {defaultValue && (
           <option value={defaultValue} disabled>
             {defaultValue}
@@ -37,7 +42,7 @@ const Dropdown = ({
           </option>
         ))}
       </select>
-    </div>
+    </React.Fragment>
   );
 };
 
