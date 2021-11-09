@@ -1,8 +1,7 @@
 import { Route, Switch } from "react-router";
 import "./App.css";
-import { ProductsProvider } from "./context/products-context";
 import { Footer, Header, Inners } from "./layout";
-import { About, Home, Productdetails, Products } from "./pages";
+import { About, Cart, Home, Productdetails, Products } from "./pages";
 
 function App() {
   return (
@@ -16,13 +15,14 @@ function App() {
           <Route path="/:inners">
             <Inners>
               <Switch>
-                <Route path="/products">
-                  <ProductsProvider>
-                    <Products />
-                  </ProductsProvider>
+                <Route path="/products" exact>
+                  <Products />
                 </Route>
                 <Route path="/products/:id">
                   <Productdetails />
+                </Route>
+                <Route path="/cart">
+                  <Cart />
                 </Route>
                 <Route path="/about">
                   <About />

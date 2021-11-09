@@ -27,10 +27,21 @@ const useFetch = () => {
     setError(null);
     try {
       setTimeout(() => {
-        if (callback) {
-          callback(tempProducts);
+        if (config) {
+          const product = tempProducts.find(
+            (product) => product.id === config.id
+          );
+          if (callback) {
+            callback(product);
+          } else {
+            setData(product);
+          }
         } else {
-          setData(tempProducts);
+          if (callback) {
+            callback(tempProducts);
+          } else {
+            setData(tempProducts);
+          }
         }
       }, 1000);
     } catch (err) {

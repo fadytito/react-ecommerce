@@ -1,19 +1,24 @@
 import React from "react";
+import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useCartContext } from "../../context/cart-context";
 
-const Productitem = ({ id, name, image, price }) => {
+const Productitem = ({ item }) => {
+  const { id, name, image, price } = item;
+  const { addItemHandler } = useCartContext();
   return (
     <StyledWrapper>
       <div className="container">
         <img src={image} alt={name} />
         <Link to={`/products/${id}`} className="link">
-          {/* <FaSearch /> */}
+          <FaSearch />
         </Link>
       </div>
       <footer>
         <h5>{name}</h5>
         <p>{price}</p>
+        <button onClick={() => addItemHandler(item)}>add to cart</button>
       </footer>
     </StyledWrapper>
   );

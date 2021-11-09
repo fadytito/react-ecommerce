@@ -10,10 +10,10 @@ const Productslist = ({ products, isList }) => {
   });
   return (
     <StyledWrapper>
-      <div className="grid-view">
+      <div className={isList ? "list-view" : "grid-view"}>
         <div className="products-container">
           {formattedProducts.map((product) => (
-            <Productitem key={product.id} {...product} />
+            <Productitem key={product.id} item={product} />
           ))}
         </div>
       </div>

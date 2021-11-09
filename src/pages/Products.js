@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { BsFillGridFill, BsList } from "react-icons/bs";
 import styled from "styled-components";
 import { Productsfilter, Productslist } from "../components/products";
 import { useProductsContext } from "../context/products-context";
@@ -76,8 +77,7 @@ const Products = () => {
                 onClick={toggleViewHandler}
                 disabled={!isList}
               >
-                Grid
-                {/* <BsFillGridFill /> */}
+                <BsFillGridFill />
               </button>
               <button
                 type="button"
@@ -85,8 +85,7 @@ const Products = () => {
                 onClick={toggleViewHandler}
                 disabled={isList}
               >
-                List
-                {/* <BsList /> */}
+                <BsList />
               </button>
             </div>
             {!isLoading && !error && <p>{productsCount} Products Found</p>}
