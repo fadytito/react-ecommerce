@@ -26,6 +26,7 @@
 
       .container {
           margin-bottom: 1rem;
+          width: 300px;
       }
 
       footer {
@@ -56,6 +57,9 @@
         padding: 0.25rem 0.5rem;
       }
       @media (min-width: 992px) {
+        .container {
+          width: auto;
+        }
         article {
           display: grid;
           grid-template-columns: auto 1fr;
