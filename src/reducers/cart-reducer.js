@@ -4,6 +4,7 @@ import {
   DELETE_ITEM,
   REMOVE_ITEM,
 } from "../actions/cart-actions";
+import { MAX_ITEM_COUNT } from "../constants/cart-constants";
 
 const cartRedeucer = (state, action) => {
   const { type, payload } = action;
@@ -15,8 +16,8 @@ const cartRedeucer = (state, action) => {
       const { item, amount } = payload;
       cartItem = state.find((cartItem) => cartItem.id === item.id);
       if (cartItem) {
-        if (cartItem.amount + amount >= 3) {
-          updatedCartItem = { ...cartItem, amount: 3 };
+        if (cartItem.amount + amount >= MAX_ITEM_COUNT) {
+          updatedCartItem = { ...cartItem, amount: MAX_ITEM_COUNT };
         } else {
           updatedCartItem = { ...cartItem, amount: cartItem.amount + amount };
         }
@@ -27,10 +28,9 @@ const cartRedeucer = (state, action) => {
             return cartItem;
           }
         });
-
         return updatedCart;
       } else {
-        return [...state, { ...item, amount }];
+        return [...state, { ...item, color: item.color, amount }];
       }
     case REMOVE_ITEM:
       cartItem = state.find((cartItem) => cartItem.id === payload.id);

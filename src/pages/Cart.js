@@ -1,52 +1,50 @@
-import React, { useMemo } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
+import CartSummary from "../components/cart/CartSummary";
 import { useCartContext } from "../context/cart-context";
+import Cartlist from "./../components/cart/CartList";
 
 const Cart = () => {
-  const {
-    cart,
-    addItemHandler,
-    removeItemHandler,
-    deleteItemHandler,
-    clearCartHandler,
-  } = useCartContext();
+  const { cart, clearCartHandler } = useCartContext();
 
-  const subtotal = useMemo(
-    () => cart.reduce((acc, item) => acc + item.amount * item.price, 0),
-    [cart]
-  );
-  const shippingFee = useMemo(
-    () =>
-      cart.reduce((acc, item) => {
-        let fee = acc;
-        if (!item.shipping) {
-          fee = fee + item.amount * 1.1;
-        }
-        return fee;
-      }, 0),
-    [cart]
-  );
+  if (cart.length === 0) {
+    return (
+      <div className="cart-page page-100">
+        <div className="empty">
+          <h2>Your cart is empty</h2>
+          <Link to="/products" className="btn">
+            fill it
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div>
-      {cart.length > 0 &&
-        cart.map((item) => (
-          <div>
-            <p>
-              {item.name}
-              <span>
-                ({item.amount})
-                <button onClick={() => addItemHandler(item)}>add</button>
-                <button onClick={() => removeItemHandler(item)}>remove</button>
-                <button onClick={() => deleteItemHandler(item)}>delete</button>
-              </span>
-            </p>
-          </div>
-        ))}
-      <button onClick={() => clearCartHandler()}>clear cart</button>
+    <div className="cart-page page">
+      <section className="section section-center">
+        <Cartlist cart={cart} />
+        <hr />
+        <div className="link-container">
+          <Link to="/products" className="link-btn">
+            continue shopping
+          </Link>
+          <button
+            type="button"
+            className="link-btn clear-btn"
+            onClick={clearCartHandler}
+          >
+            clear shopping carts
+          </button>
+        </div>
+        {/* <button onClick={() => clearCartHandler()}>clear cart</button>
       <div>
         <p>subtotal: {subtotal}</p>
         <p>shipping fee: {shippingFee}</p>
         <p>order total: {subtotal + shippingFee}</p>
-      </div>
+      </div> */}
+        <CartSummary />
+      </section>
     </div>
   );
 };

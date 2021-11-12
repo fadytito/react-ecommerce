@@ -1,0 +1,107 @@
+.filters {
+  .form-control {
+    margin-bottom: 1.25rem;
+    h5 {
+      margin-bottom: 0.5rem;
+    }
+  }
+  .search-input {
+    padding: 0.5rem;
+    background: $clr-grey-10;
+    border-radius: $radius;
+    border-color: transparent;
+    letter-spacing: $spacing;
+  }
+  .search-input::placeholder {
+    text-transform: capitalize;
+  }
+
+  input[type="radio"]:not(.color-btn) {
+    width: 0;
+    height: 0;
+    position: absolute;
+
+    &:checked {
+      & + label {
+        border-color: $clr-grey-5 !important;
+        opacity: 1;
+      }
+    }
+
+    & + label {
+      display: inline-block;
+      line-height: 1;
+      font-size: .85rem;
+      margin: 0.2em 0;
+      padding: 0.25rem 0;
+      text-transform: capitalize;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid transparent;
+      letter-spacing: $spacing;
+      color: $clr-grey-5;
+      cursor: pointer;
+    }
+  }
+
+  button {
+    display: block;
+    margin: 0.25em 0;
+    padding: 0.25rem 0;
+    text-transform: capitalize;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid transparent;
+    letter-spacing: $spacing;
+    color: $clr-grey-5;
+    cursor: pointer;
+  }
+  .active {
+    border-color: $clr-grey-5;
+  }
+  .company {
+    background: $clr-grey-10;
+    border-radius: $radius;
+    border-color: transparent;
+    padding: 0.25rem;
+  }
+  .colors {
+    display: flex;
+    align-items: center;
+  }
+  
+  .all-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.5rem;
+    opacity: 0.5;
+  }
+
+  .all-btn .active {
+    text-decoration: underline;
+  }
+  .price {
+    margin-bottom: 0.25rem;
+  }
+  .shipping {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    text-transform: capitalize;
+    column-gap: 0.5rem;
+    font-size: 1rem;
+  }
+  .clear-btn {
+    background: $clr-red-dark;
+    color: $clr-white;
+    padding: 0.25rem 0.5rem;
+    border-radius: $radius;
+  }
+  @media (min-width: 768px) {
+    .content {
+      position: sticky;
+      top: 1rem;
+    }
+  }
+}

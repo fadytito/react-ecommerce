@@ -1,0 +1,64 @@
+.contact {
+    padding: 5rem 0;
+  h3 {
+    text-transform: none;
+  }
+  p {
+    line-height: 2;
+    max-width: 45em;
+    color: $clr-grey-5;
+  }
+  .contact-form {
+    width: 90vw;
+    max-width: 500px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+  }
+
+  .form-input,
+  .submit-btn {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border: 2px solid $clr-black;
+  }
+  .form-input {
+    border-right: none;
+    color: $clr-grey-3;
+    border-top-left-radius: $radius;
+    border-bottom-left-radius: $radius;
+  }
+  .submit-btn {
+    border-top-right-radius: $radius;
+    border-bottom-right-radius: $radius;
+  }
+  .form-input::placeholder {
+    color: $clr-black;
+    text-transform: capitalize;
+  }
+  .submit-btn {
+    background: $clr-primary-5;
+    text-transform: capitalize;
+    letter-spacing: $spacing;
+    cursor: pointer;
+    transition: $transition;
+    color: $clr-black;
+  }
+  .submit-btn:hover {
+    color: $clr-white;
+  }
+  @media (min-width: 992px) {
+    .content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 8rem;
+      margin-top: 2rem;
+    }
+    p {
+      margin-bottom: 0;
+    }
+  }
+  @media (min-width: 1280px) {
+    padding: 15rem 0;
+  }
+}

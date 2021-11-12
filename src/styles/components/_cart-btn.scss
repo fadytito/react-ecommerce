@@ -1,0 +1,53 @@
+.cart-btn-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 225px;
+  
+    .cart-btn {
+      color: $clr-grey-1;
+      font-size: 1.5rem;
+      letter-spacing: $spacing;
+      color: $clr-grey-1;
+      display: flex;
+  
+      align-items: center;
+    }
+    .cart-container {
+      display: flex;
+      align-items: center;
+      position: relative;
+      svg {
+        height: 1.6rem;
+        margin-left: 5px;
+      }
+    }
+    .cart-value {
+      position: absolute;
+      top: -10px;
+      right: -16px;
+      background: $clr-primary-5;
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 0.75rem;
+      color: $clr-white;
+      padding: 12px;
+    }
+    .auth-btn {
+      display: flex;
+      align-items: center;
+      background: transparent;
+      border-color: transparent;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: $clr-grey-1;
+      letter-spacing: $spacing;
+      svg {
+        margin-left: 5px;
+      }
+    }
+}

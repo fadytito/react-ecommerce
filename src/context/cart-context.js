@@ -1,4 +1,10 @@
-import React, { useCallback, useContext, useMemo, useReducer } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+} from "react";
 import {
   ADD_ITEM,
   CLEAR_CART,
@@ -12,7 +18,13 @@ const CartContext = React.createContext();
 const cartInitialValue = [];
 
 const CartProvider = ({ children }) => {
-  const [cart, dispatchCart] = useReducer(cartRedeucer, cartInitialValue);
+  const [cart, dispatchCart] = useReducer(cartRedeucer, cartInitialValue, () =>
+    JSON.parse(localStorage.getItem("cart"))
+  );
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
 
   const itemsCount = useMemo(
     () => cart.reduce((acc, item) => acc + item.amount, 0),
@@ -21,7 +33,10 @@ const CartProvider = ({ children }) => {
 
   const addItemHandler = useCallback(
     (item, amount = 1) => {
-      dispatchCart({ type: ADD_ITEM, payload: { item, amount } });
+      dispatchCart({
+        type: ADD_ITEM,
+        payload: { item, amount },
+      });
     },
     [dispatchCart]
   );

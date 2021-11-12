@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import tempProducts from "../db/products.json";
 
 const useFetch = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -43,11 +43,12 @@ const useFetch = () => {
             setData(tempProducts);
           }
         }
+        setIsLoading(false);
       }, 1000);
     } catch (err) {
       setError(err.message);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, []);
 
   return { data, setData, isLoading, error, fetchData };

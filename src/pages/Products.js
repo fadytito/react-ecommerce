@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { BsFillGridFill, BsList } from "react-icons/bs";
-import styled from "styled-components";
 import { Productsfilter, Productslist } from "../components/products";
 import { useProductsContext } from "../context/products-context";
+import Error from "./../components/Error";
+import Loading from "./../components/Loading";
 import PRODUCTS_SORT_OPTIONS from "./../constants/products-constants";
-import { Dropdown } from "./../ui/";
 
 const Products = () => {
   const {
@@ -43,12 +43,9 @@ const Products = () => {
     [allProducts]
   );
 
-  const dropdownChangeHandler = useCallback(
-    (e) => {
-      sortingChangeHandler(e);
-    },
-    [sortingChangeHandler]
-  );
+  const sortChangeHandler = (e) => {
+    sortingChangeHandler(e.target.value);
+  };
 
   const toggleViewHandler = () => {
     setIsList((oldState) => !oldState);
@@ -59,132 +56,64 @@ const Products = () => {
   }, [isList]);
 
   return (
-    <StyledWrapper>
-      <div className="section-center products">
-        <Productsfilter
-          allCategories={allCategories}
-          allCompanies={allCompanies}
-          allColors={allColors}
-          minPrice={minPrice}
-          maxPrice={maxPrice}
-        />
-        <div>
-          <div className="search-header">
-            <div className="btn-container">
-              <button
-                type="button"
-                className={`${!isList ? "active" : null}`}
-                onClick={toggleViewHandler}
-                disabled={!isList}
-              >
-                <BsFillGridFill />
-              </button>
-              <button
-                type="button"
-                className={`${isList ? "active" : null}`}
-                onClick={toggleViewHandler}
-                disabled={isList}
-              >
-                <BsList />
-              </button>
-            </div>
-            {!isLoading && !error && <p>{productsCount} Products Found</p>}
-            <hr />
-            <div>
-              <label htmlFor="sort">sort by</label>
-              <Dropdown
-                options={sortingDropdownOptionsArr}
-                value={sortingVal}
-                onSelectChange={dropdownChangeHandler}
-                styleClass={"sort-input"}
-              />
-            </div>
+    <div className="section-center products">
+      <Productsfilter
+        allCategories={allCategories}
+        allCompanies={allCompanies}
+        allColors={allColors}
+        minPrice={minPrice}
+        maxPrice={maxPrice}
+      />
+      <div>
+        <div className="search-header">
+          <div className="btn-container">
+            <button
+              type="button"
+              className={`${!isList ? "active" : null}`}
+              onClick={toggleViewHandler}
+              disabled={!isList}
+            >
+              <BsFillGridFill />
+            </button>
+            <button
+              type="button"
+              className={`${isList ? "active" : null}`}
+              onClick={toggleViewHandler}
+              disabled={isList}
+            >
+              <BsList />
+            </button>
           </div>
-          {isLoading && <div>Loading...</div>}
-          {error && <div>Something went wrong!</div>}
-          {productsCount > 0 && (
-            <Productslist products={filteredProducts} isList={isList} />
-          )}
+          <p>{productsCount} Products Found</p>
+          <hr />
+          <div>
+            <label htmlFor="sort">sort by</label>
+            <select
+              value={sortingVal}
+              onChange={sortChangeHandler}
+              className="sort-input"
+            >
+              {sortingDropdownOptionsArr.map((option) => (
+                <option value={option.value} key={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
+        {isLoading && <Loading />}
+        {error && <Error />}
+        {productsCount > 0 && (
+          <Productslist products={filteredProducts} isList={isList} />
+        )}
+        {productsCount === 0 && !isLoading && !error && (
+          <h5 style={{ textTransform: "none" }}>
+            Sorry, no products matched your search...
+          </h5>
+        )}
       </div>
-    </StyledWrapper>
+    </div>
   );
 };
-
-const StyledWrapper = styled.div`
-  .products {
-    display: grid;
-    gap: 3rem 1.5rem;
-    margin: 4rem auto;
-  }
-  @media (min-width: 768px) {
-    .products {
-      grid-template-columns: 200px 1fr;
-    }
-  }
-
-  .search-header {
-    display: grid;
-    grid-template-columns: auto auto 1fr auto;
-    align-items: center;
-    margin-bottom: 2rem;
-    column-gap: 2rem;
-    @media (max-width: 576px) {
-      display: grid;
-      grid-template-columns: 1fr;
-      row-gap: 0.75rem;
-      .btn-container {
-        width: 50px;
-      }
-      label {
-        display: inline-block;
-        margin-right: 0.5rem;
-      }
-    }
-    @media (min-width: 768px) {
-      column-gap: 2rem;
-    }
-    p {
-      text-transform: capitalize;
-      margin-bottom: 0;
-    }
-
-    .btn-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      column-gap: 0.5rem;
-      button {
-        background: transparent;
-        border: 1px solid var(--clr-black);
-        color: var(--clr-black);
-        width: 1.5rem;
-        border-radius: var(--radius);
-        height: 1.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        svg {
-          font-size: 1rem;
-        }
-      }
-      .active {
-        background: var(--clr-black);
-        color: var(--clr-white);
-      }
-    }
-
-    .sort-input {
-      border-color: transparent;
-      font-size: 1rem;
-      text-transform: capitalize;
-      padding: 0.25rem 0.5rem;
-    }
-    label {
-      font-size: 1rem;
-      text-transform: capitalize;
-    }
-  }
-`;
 
 export default Products;

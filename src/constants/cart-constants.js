@@ -1,0 +1,4 @@
+const MAX_ITEM_COUNT = 10;
+const SHIPPING_FEE = 534;
+
+export { MAX_ITEM_COUNT, SHIPPING_FEE };

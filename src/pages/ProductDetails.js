@@ -1,8 +1,11 @@
-import React, { useEffect, useRef } from "react";
-import { useParams } from "react-router";
-import { useCartContext } from "../context/cart-context";
+import React, { useEffect } from "react";
+import { useHistory, useParams } from "react-router";
+import AddToCart from "../components/cart/AddToCart";
+import Error from "../components/Error";
+import Loading from "../components/Loading";
+import useFetch from "../hooks/useFetch";
 import ProductDetailsModel from "../models/ProductDetailsModel";
-import useFetch from "./../hooks/useFetch";
+import formatPrice from "../utils/format-price";
 
 // const single_product_api = config.single_product_api;
 
@@ -13,40 +16,53 @@ const Productdetails = () => {
     isLoading,
     error,
   } = useFetch();
-  const itemAmountValRef = useRef();
-  const { addItemHandler } = useCartContext();
-  const formattedProduct = new ProductDetailsModel(
-    product.name,
-    product.image,
-    product.price
-  );
-  const { name, image, price } = formattedProduct;
+
   const { id } = useParams();
+  const { goBack } = useHistory();
 
   useEffect(() => {
-    if (id) {
-      fetchProduct(null, { id });
-    }
+    fetchProduct(null, { id });
   }, [id, fetchProduct]);
 
-  const addToCartHandler = (e) => {
-    e.preventDefault();
-    addItemHandler(product, +itemAmountValRef.current.value);
-  };
+  if (error) {
+    return <Error />;
+  }
+  if (isLoading || !product) {
+    return <Loading />;
+  }
 
+  const formattedProduct = new ProductDetailsModel(
+    product.name,
+    product.description,
+    product.image,
+    product.price,
+    product.company
+  );
+  const { name, description, image, price, company } = formattedProduct;
   return (
-    <div>
-      {name}
-      <form onSubmit={addToCartHandler}>
-        <input
-          type="number"
-          min="1"
-          max="3"
-          ref={itemAmountValRef}
-          defaultValue="1"
-        />
-        <button>add to cart</button>
-      </form>
+    <div className="product-details">
+      <div className="section section-center page">
+        <button className="btn" onClick={goBack}>
+          back to products
+        </button>
+        <div className="product-center">
+          <section className="gallery">
+            <img src={image} alt="main" className="main" />
+          </section>
+          {/* <ProductImages images={images} /> */}
+          <section className="content">
+            <h2>{name}</h2>
+            <h5 className="price"> {formatPrice(price)}</h5>
+            <p className="desc"> {description}</p>
+            <p className="info">
+              <span>Brand : </span>
+              {company}
+            </p>
+            <hr />
+            <AddToCart product={product} />
+          </section>
+        </div>
+      </div>
     </div>
   );
 };

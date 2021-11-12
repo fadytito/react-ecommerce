@@ -1,0 +1,72 @@
+.sidebar-wrapper {
+  text-align: center;
+  .sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+  }
+  .close-btn {
+    font-size: 2rem;
+    background: transparent;
+    border-color: transparent;
+    color: $clr-primary-5;
+    transition: $transition;
+    cursor: pointer;
+    margin-top: 0.2rem;
+  }
+  .close-btn:hover {
+    color: $clr-red-light;
+  }
+  .logo {
+    justify-self: center;
+    height: 45px;
+  }
+  .nav-links {
+    display: block;
+    margin-bottom: 2rem;
+  }
+  .nav-links a {
+    display: block;
+    text-align: left;
+    font-size: 1rem;
+    text-transform: capitalize;
+    padding: 1rem 1.5rem;
+    color: $clr-grey-3;
+    transition: $transition;
+    letter-spacing: $spacing;
+  }
+
+  .nav-links a:hover {
+    padding: 1rem 1.5rem;
+    padding-left: 2rem;
+    background: $clr-grey-10;
+    color: $clr-grey-2;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: $clr-white;
+    transition: $transition;
+    transform: translate(-100%);
+    z-index: -1;
+  }
+  .show-sidebar {
+    transform: translate(0);
+    z-index: 999;
+  }
+  .cart-btn-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 2rem auto;
+  }
+  @media screen and (min-width: 992px) {
+    .sidebar {
+      display: none;
+    }
+  }
+}

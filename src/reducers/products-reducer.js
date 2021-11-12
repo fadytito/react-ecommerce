@@ -54,7 +54,7 @@ const productsReducer = (state, action) => {
         }
         if (color !== "all") {
           updatedFilteredProducts = updatedFilteredProducts.filter((item) =>
-            item.colors.indexOf(color)
+            item.colors.includes(color)
           );
         }
         if (shipping !== "all") {
