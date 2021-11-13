@@ -1,8 +1,5 @@
 import React from "react";
-import Contact from "../components/home/Contact";
-import Featuredproducts from "../components/home/FeaturedProducts";
-import Services from "../components/home/Services";
-import Hero from "./../components/home/Hero";
+import { Contact, Featuredproducts, Hero, Services } from "../components/home";
 
 const Home = () => {
   return (

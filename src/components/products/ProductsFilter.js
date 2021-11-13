@@ -1,21 +1,31 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { FaCheck } from "react-icons/fa";
 import { useProductsContext } from "../../context/products-context";
 import formatPrice from "./../../utils/format-price";
 
-const Productsfilter = ({
-  allCategories,
-  allCompanies,
-  allColors,
-  minPrice,
-  maxPrice,
-}) => {
+const Productsfilter = () => {
   const {
-    products: { filters },
+    products: { filters, allProducts },
+    minPrice,
+    maxPrice,
     filtersChangeHandler,
     clearFiltersHandler,
   } = useProductsContext();
+
   const { name, category, company, color, priceRange, shipping } = filters;
+
+  const allCategories = useMemo(
+    () => [...new Set(allProducts.map((p) => p.category))],
+    [allProducts]
+  );
+  const allCompanies = useMemo(
+    () => [...new Set(allProducts.map((p) => p.company))],
+    [allProducts]
+  );
+  const allColors = useMemo(
+    () => [...new Set(allProducts.map((p) => p.colors).flat())],
+    [allProducts]
+  );
 
   const priceRangeValue = priceRange ? priceRange : maxPrice;
 

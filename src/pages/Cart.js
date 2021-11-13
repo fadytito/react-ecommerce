@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import CartSummary from "../components/cart/CartSummary";
+import { Cartlist, CartSummary } from "../components/cart";
 import { useCartContext } from "../context/cart-context";
-import Cartlist from "./../components/cart/CartList";
 
 const Cart = () => {
   const { cart, clearCartHandler } = useCartContext();
@@ -37,12 +36,6 @@ const Cart = () => {
             clear shopping carts
           </button>
         </div>
-        {/* <button onClick={() => clearCartHandler()}>clear cart</button>
-      <div>
-        <p>subtotal: {subtotal}</p>
-        <p>shipping fee: {shippingFee}</p>
-        <p>order total: {subtotal + shippingFee}</p>
-      </div> */}
         <CartSummary />
       </section>
     </div>
