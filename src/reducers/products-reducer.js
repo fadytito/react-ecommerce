@@ -95,7 +95,11 @@ const productsReducer = (state, action) => {
           default:
             return updatedSortedProducts;
         }
-        return { ...state, filteredProducts: updatedSortedProducts };
+        return {
+          ...state,
+          filteredProducts: updatedSortedProducts,
+          sortingVal: payload,
+        };
       default:
         return state;
     }

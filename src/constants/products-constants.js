@@ -1,6 +1,6 @@
 const PRODUCTS_SORT_OPTIONS = {
   0: {
-    label: "Price (lowest to highes)",
+    label: "Price (lowest to highest)",
     value: {
       sortingBy: "price",
       sortingDir: "des",
