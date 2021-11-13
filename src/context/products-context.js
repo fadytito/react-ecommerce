@@ -13,7 +13,6 @@ import {
   SORT_PRODUCTS,
   UPDATE_FILTERS,
 } from "../actions/products-actions";
-import config from "../config.json";
 import useFetch from "../hooks/useFetch";
 import productsReducer from "../reducers/products-reducer";
 import omitBy from "../utils/omitBy";
@@ -31,8 +30,6 @@ const productsInitialValues = {
 };
 
 const ProductsContext = React.createContext(productsInitialValues);
-
-const products_api = config.products_api;
 
 const ProductsProvider = ({ children }) => {
   const { isLoading, error, fetchData: fetchProducts } = useFetch();
@@ -68,7 +65,7 @@ const ProductsProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    fetchProducts(products_api, null, loadProducts);
+    fetchProducts(null, loadProducts);
   }, [fetchProducts, loadProducts]);
 
   useEffect(() => {

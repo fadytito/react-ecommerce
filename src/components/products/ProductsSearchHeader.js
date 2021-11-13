@@ -1,10 +1,12 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { BsFillGridFill, BsList } from "react-icons/bs";
 import { useProductsContext } from "../../context/products-context";
 import PRODUCTS_SORT_OPTIONS from "./../../constants/products-constants";
 
 const ProductsSearchHeader = ({ productsCount, sortingVal, onViewChange }) => {
   const { sortingChangeHandler } = useProductsContext();
+  const onViewChangeRef = useRef();
+  onViewChangeRef.current = onViewChange;
 
   const [isList, setIsList] = useState(() =>
     JSON.parse(localStorage.getItem("isListView"))
@@ -29,7 +31,7 @@ const ProductsSearchHeader = ({ productsCount, sortingVal, onViewChange }) => {
 
   useEffect(() => {
     localStorage.setItem("isListView", isList);
-    onViewChange(isList);
+    onViewChangeRef.current(isList);
   }, [isList]);
 
   return (

@@ -10,7 +10,8 @@ import Loading from "./../components/Loading";
 
 const Products = () => {
   const {
-    products: { filteredProducts, sortingVal },
+    products: { filteredProducts },
+    sortingVal,
     isLoading,
     error,
   } = useProductsContext();

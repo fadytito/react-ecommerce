@@ -1,50 +1,36 @@
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { useCallback, useState } from "react";
-import tempProducts from "../db/products.json";
+import { db } from "./../firebase-config";
 
 const useFetch = () => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // const fetchData = useCallback(async (url, config, callback) => {
-  //   setIsLoading(true);
-  //   setError(null);
-  //   try {
-  //     const { data } = await axios(url, config);
-  //     if (callback) {
-  //       callback(data);
-  //     } else {
-  //       setData(data);
-  //     }
-  //   } catch (err) {
-  //     setError(err.message);
-  //   }
-  //   setIsLoading(false);
-  // }, []);
-
-  const fetchData = useCallback(async (url, config, callback) => {
+  const fetchData = useCallback(async (config, callback) => {
     setIsLoading(true);
     setError(null);
     try {
-      setTimeout(() => {
-        if (config) {
-          const product = tempProducts.find(
-            (product) => product.id === config.id
-          );
-          if (callback) {
-            callback(product);
-          } else {
-            setData(product);
-          }
+      if (config) {
+        const productDocRef = doc(db, "products", config.id);
+        const docSnap = await getDoc(productDocRef);
+        const product = docSnap.data();
+        if (callback) {
+          callback(product);
         } else {
-          if (callback) {
-            callback(tempProducts);
-          } else {
-            setData(tempProducts);
-          }
+          setData(product);
         }
-        setIsLoading(false);
-      }, 1000);
+      } else {
+        const productsCollectionRef = collection(db, "products");
+        const docsSnap = await getDocs(productsCollectionRef);
+        const products = docsSnap.docs.map((doc) => doc.data());
+        if (callback) {
+          callback(products);
+        } else {
+          setData(products);
+        }
+      }
+      setIsLoading(false);
     } catch (err) {
       setError(err.message);
       setIsLoading(false);

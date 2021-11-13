@@ -1,8 +1,8 @@
 class ProductDetailsModel {
-  constructor(name, description, image, price, company) {
+  constructor(name, description, images, price, company) {
     this.name = name;
     this.description = description;
-    this.image = image;
+    this.images = images;
     this.price = price;
     this.company = company;
   }

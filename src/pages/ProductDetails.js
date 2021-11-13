@@ -3,11 +3,10 @@ import { useHistory, useParams } from "react-router";
 import AddToCart from "../components/cart/AddToCart";
 import Error from "../components/Error";
 import Loading from "../components/Loading";
+import { ProductImages } from "../components/products";
 import useFetch from "../hooks/useFetch";
 import ProductDetailsModel from "../models/ProductDetailsModel";
 import formatPrice from "../utils/format-price";
-
-// const single_product_api = config.single_product_api;
 
 const Productdetails = () => {
   const {
@@ -21,7 +20,7 @@ const Productdetails = () => {
   const { goBack } = useHistory();
 
   useEffect(() => {
-    fetchProduct(null, { id });
+    fetchProduct({ id });
   }, [id, fetchProduct]);
 
   if (error) {
@@ -34,11 +33,12 @@ const Productdetails = () => {
   const formattedProduct = new ProductDetailsModel(
     product.name,
     product.description,
-    product.image,
+    product.images,
     product.price,
     product.company
   );
-  const { name, description, image, price, company } = formattedProduct;
+
+  const { name, description, images, price, company } = formattedProduct;
   return (
     <div className="product-details">
       <div className="section section-center page">
@@ -46,10 +46,7 @@ const Productdetails = () => {
           back to products
         </button>
         <div className="product-center">
-          <section className="gallery">
-            <img src={image} alt="main" className="main" />
-          </section>
-          {/* <ProductImages images={images} /> */}
+          <ProductImages images={images} />
           <section className="content">
             <h2>{name}</h2>
             <h5 className="price"> {formatPrice(price)}</h5>
