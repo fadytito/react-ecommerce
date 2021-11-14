@@ -11,6 +11,7 @@ import {
   DELETE_ITEM,
   REMOVE_ITEM,
 } from "../actions/cart-actions";
+import { SHIPPING_FEE } from "../constants/cart-constants";
 import cartRedeucer from "../reducers/cart-reducer";
 
 const CartContext = React.createContext();
@@ -32,6 +33,16 @@ const CartProvider = ({ children }) => {
     () => cart.reduce((acc, item) => acc + item.amount, 0),
     [cart]
   );
+
+  const subtotal = useMemo(
+    () => cart.reduce((acc, item) => acc + item.amount * item.price, 0),
+    [cart]
+  );
+  const hasShipmentFee = cart.some((item) => !item.shipping);
+
+  const shipmentFee = hasShipmentFee ? SHIPPING_FEE : 0;
+
+  const total = subtotal + shipmentFee;
 
   const addItemHandler = useCallback(
     (item, amount = 1) => {
@@ -68,6 +79,9 @@ const CartProvider = ({ children }) => {
     <CartContext.Provider
       value={{
         cart,
+        subtotal,
+        shipmentFee,
+        total,
         itemsCount,
         addItemHandler,
         removeItemHandler,

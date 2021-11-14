@@ -9,14 +9,17 @@ const Cart = () => {
 
   if (cart.length === 0) {
     return (
-      <div className="cart-page page-100">
-        <div className="empty">
-          <h2>Your cart is empty</h2>
-          <Link to="/products" className="btn">
-            fill it
-          </Link>
+      <React.Fragment>
+        <Breadcrumb title="Cart" />
+        <div className="cart-page page-100">
+          <div className="empty">
+            <h2>Your cart is empty</h2>
+            <Link to="/products" className="btn">
+              fill it
+            </Link>
+          </div>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 

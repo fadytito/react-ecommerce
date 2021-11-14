@@ -1,19 +1,13 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import React, { useMemo } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { SHIPPING_FEE } from "../../constants/cart-constants";
 import { useCartContext } from "../../context/cart-context";
 import formatPrice from "../../utils/format-price";
 
 const CartSummary = () => {
-  const { cart } = useCartContext();
+  const { subtotal, shipmentFee, total } = useCartContext();
   const { user, loginWithRedirect } = useAuth0();
 
-  const subtotal = useMemo(
-    () => cart.reduce((acc, item) => acc + item.amount * item.price, 0),
-    [cart]
-  );
-  const hasShipmentFee = cart.some((item) => !item.shipping);
   return (
     <section className="cart-summary">
       <div>
@@ -21,14 +15,14 @@ const CartSummary = () => {
           <h5>
             subtotal : <span>{formatPrice(subtotal)}</span>
           </h5>
-          {hasShipmentFee && (
+          {shipmentFee && (
             <p>
-              shipping fee : <span>{formatPrice(SHIPPING_FEE)}</span>
+              shipping fee : <span>{formatPrice(shipmentFee)}</span>
             </p>
           )}
           <hr />
           <h4>
-            order total : <span>{formatPrice(subtotal + SHIPPING_FEE)}</span>
+            order total : <span>{formatPrice(total)}</span>
           </h4>
         </article>
 
