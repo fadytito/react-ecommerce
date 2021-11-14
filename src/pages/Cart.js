@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Cartlist, CartSummary } from "../components/cart";
 import { useCartContext } from "../context/cart-context";
+import { Breadcrumb } from "../layout";
 
 const Cart = () => {
   const { cart, clearCartHandler } = useCartContext();
@@ -20,7 +21,8 @@ const Cart = () => {
   }
 
   return (
-    <div className="cart-page page">
+    <div className="cart-page">
+      <Breadcrumb title="Cart" />
       <section className="section section-center">
         <Cartlist cart={cart} />
         <hr />

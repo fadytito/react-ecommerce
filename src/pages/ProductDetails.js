@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { useHistory, useParams } from "react-router";
+import { Error, Loading } from "../components";
 import AddToCart from "../components/cart/AddToCart";
-import Error from "../components/Error";
-import Loading from "../components/Loading";
 import { ProductImages } from "../components/products";
 import useFetch from "../hooks/useFetch";
+import { Breadcrumb } from "../layout";
 import ProductDetailsModel from "../models/ProductDetailsModel";
 import formatPrice from "../utils/format-price";
 
@@ -41,6 +41,7 @@ const Productdetails = () => {
   const { name, description, images, price, company } = formattedProduct;
   return (
     <div className="product-details">
+      <Breadcrumb product={id} title={product.name} />
       <div className="section section-center page">
         <button className="btn" onClick={goBack}>
           back to products

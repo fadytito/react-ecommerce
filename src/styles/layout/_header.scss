@@ -34,7 +34,10 @@
   .nav-links {
     display: none;
   }
-  .cart-btn-wrapper {
+  .header-btns-wrapper {
+    display: none;
+  }
+  .auth-btn {
     display: none;
   }
   @media (min-width: 992px) {
@@ -43,7 +46,7 @@
     }
     .nav-center {
       display: grid;
-      grid-template-columns: auto 1fr auto;
+      grid-template-columns: auto 1fr auto auto;
       align-items: center;
     }
     .nav-links {
@@ -63,8 +66,13 @@
         }
       }
     }
-    .cart-btn-wrapper {
-      display: grid;
+    .header-btns-wrapper {
+      display: flex;
+    }
+
+    .auth-btn {
+      display: flex;
+      margin-left: 2rem;
     }
   }
 }

@@ -1,8 +1,7 @@
-.cart-btn-wrapper {
+.header-btns-wrapper {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    width: 225px;
   
     .cart-btn {
       color: $clr-grey-1;
@@ -36,18 +35,5 @@
       font-size: 0.75rem;
       color: $clr-white;
       padding: 12px;
-    }
-    .auth-btn {
-      display: flex;
-      align-items: center;
-      background: transparent;
-      border-color: transparent;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: $clr-grey-1;
-      letter-spacing: $spacing;
-      svg {
-        margin-left: 5px;
-      }
     }
 }

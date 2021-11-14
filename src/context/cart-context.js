@@ -20,6 +20,8 @@ const cartInitialValue = [];
 const CartProvider = ({ children }) => {
   const [cart, dispatchCart] = useReducer(cartRedeucer, cartInitialValue, () =>
     JSON.parse(localStorage.getItem("cart"))
+      ? JSON.parse(localStorage.getItem("cart"))
+      : cartInitialValue
   );
 
   useEffect(() => {
@@ -83,3 +85,4 @@ const useCartContext = () => {
 };
 
 export { useCartContext, CartProvider };
+

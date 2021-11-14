@@ -3,6 +3,7 @@ import { FaBars } from "react-icons/fa";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.svg";
+import AuthenticationButton from "../components/login/AuthenticationButton";
 import Navbar from "../components/Navbar";
 import Cartbtn from "./../components/cart/CartBtn";
 import Sidebar from "./Sidebar";
@@ -32,7 +33,10 @@ const Header = () => {
           </button>
         </div>
         <Navbar />
-        <Cartbtn />
+        <div className="header-btns-wrapper">
+          <Cartbtn />
+          <AuthenticationButton />
+        </div>
         <Sidebar isSidebarOpen={isSidebarOpen} toggleSidbar={toggleSidbar} />
       </div>
     </header>

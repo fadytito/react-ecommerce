@@ -7,12 +7,12 @@ const Productitem = ({ item }) => {
   const { id, name, description, image, price } = item;
   return (
     <article className="product-item">
-      <div className="container">
+      <Link to={`/products/${id}`} className="container">
         <img src={image} alt={name} />
-        <Link to={`/products/${id}`} className="link">
+        <div className="icon">
           <FaSearch />
-        </Link>
-      </div>
+        </div>
+      </Link>
       <footer>
         <h5>{name}</h5>
         <p>{formatPrice(price)}</p>

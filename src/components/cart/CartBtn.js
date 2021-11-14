@@ -6,15 +6,13 @@ import { useCartContext } from "../../context/cart-context";
 const Cartbtn = () => {
   const { itemsCount } = useCartContext();
   return (
-    <div className="cart-btn-wrapper">
-      <Link to="/cart" className="cart-btn">
-        Cart
-        <span className="cart-container">
-          <FaShoppingCart />
-          <span className="cart-value">{itemsCount}</span>
-        </span>
-      </Link>
-    </div>
+    <Link to="/cart" className="cart-btn">
+      Cart
+      <span className="cart-container">
+        <FaShoppingCart />
+        <span className="cart-value">{itemsCount}</span>
+      </span>
+    </Link>
   );
 };
 

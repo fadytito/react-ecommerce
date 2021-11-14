@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { SHIPPING_FEE } from "../../constants/cart-constants";
@@ -6,6 +7,7 @@ import formatPrice from "../../utils/format-price";
 
 const CartSummary = () => {
   const { cart } = useCartContext();
+  const { user, loginWithRedirect } = useAuth0();
 
   const subtotal = useMemo(
     () => cart.reduce((acc, item) => acc + item.amount * item.price, 0),
@@ -29,15 +31,16 @@ const CartSummary = () => {
             order total : <span>{formatPrice(subtotal + SHIPPING_FEE)}</span>
           </h4>
         </article>
-        <Link to="/checkout" className="btn">
-          proceed to checkout
-        </Link>
-        {/* {myUser ? (
+
+        {user ? (
+          <Link to="/checkout" className="btn">
+            proceed to checkout
+          </Link>
         ) : (
-          <button type="button" className="btn">
-            login
+          <button className="btn" onClick={() => loginWithRedirect()}>
+            Login
           </button>
-        )} */}
+        )}
       </div>
     </section>
   );

@@ -161,4 +161,10 @@
   .page {
     min-height: calc(100vh - (20vh + 10rem));
   }
+
+  .splash {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+  }
   

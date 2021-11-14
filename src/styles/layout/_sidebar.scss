@@ -59,10 +59,17 @@
     transform: translate(0);
     z-index: 999;
   }
-  .cart-btn-wrapper {
+  .header-btns-wrapper {
     display: flex;
     justify-content: center;
     margin: 2rem auto;
+
+    & > * {
+      margin: 0 1rem;
+    }
+  }
+  .auth-btn {
+    display: flex;
   }
   @media screen and (min-width: 992px) {
     .sidebar {

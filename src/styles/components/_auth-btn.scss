@@ -1,0 +1,13 @@
+.auth-btn {
+    display: flex;
+    align-items: center;
+    background: transparent;
+    border-color: transparent;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: $clr-grey-1;
+    letter-spacing: $spacing;
+    svg {
+      margin-left: 5px;
+    }
+  }
