@@ -18,6 +18,10 @@
         width: 100%;
         background: white;
         box-sizing: border-box;
+
+        &::placeholder {
+          color: $clr-grey-8;
+        }
       }
       .result-message {
         line-height: 22px;

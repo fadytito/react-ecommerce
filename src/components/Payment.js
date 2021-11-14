@@ -67,7 +67,12 @@ const Payment = () => {
 
           <form id="payment-form" onSubmit={submitHandler}>
             <div id="card-element">
-              <input type="text" value={inputVal} onChange={changeHandler} />
+              <input
+                type="text"
+                value={inputVal}
+                onChange={changeHandler}
+                placeholder="Enter the above card number"
+              />
             </div>
             <button
               id="submit"
