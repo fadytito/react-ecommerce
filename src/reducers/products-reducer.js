@@ -4,6 +4,7 @@ import {
   SORT_PRODUCTS,
   UPDATE_FILTERS,
 } from "../actions/products-actions";
+import { normalizeById } from "../utils/data-normalizer";
 
 const productsReducer = (state, action) => {
   const { type, payload } = action;
@@ -32,11 +33,21 @@ const productsReducer = (state, action) => {
   } else {
     switch (type) {
       case LOAD_PRODUCTS:
-        return { ...state, allProducts: payload, filteredProducts: payload };
+        const normalizedProducts = payload.reduce(
+          (products, product) => normalizeById(products, product),
+          {}
+        );
+        return {
+          ...state,
+          allProducts: normalizedProducts,
+          filteredProducts: payload,
+        };
       case FILTER_PRODUCTS:
         const { name, category, company, color, priceRange, shipping } =
           payload;
-        let updatedFilteredProducts = [...allProducts];
+        let updatedFilteredProducts = Object.keys(allProducts).map(
+          (id) => allProducts[id]
+        );
         if (name) {
           updatedFilteredProducts = updatedFilteredProducts.filter((item) =>
             item.name.includes(name)

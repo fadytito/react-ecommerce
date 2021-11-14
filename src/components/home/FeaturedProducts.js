@@ -6,10 +6,8 @@ import Loading from "../Loading";
 import Productitem from "../products/ProductItem";
 
 const Featuredproducts = () => {
-  const { products, isLoading, error } = useProductsContext();
-  const featuredProducts = products.allProducts.filter(
-    (product) => product.featured
-  );
+  const { allProductsArr, isLoading, error } = useProductsContext();
+  const featuredProducts = allProductsArr.filter((product) => product.featured);
 
   if (isLoading) {
     return <Loading />;

@@ -5,7 +5,8 @@ import formatPrice from "./../../utils/format-price";
 
 const Productsfilter = () => {
   const {
-    products: { filters, allProducts },
+    products: { filters },
+    allProductsArr,
     minPrice,
     maxPrice,
     filtersChangeHandler,
@@ -15,16 +16,16 @@ const Productsfilter = () => {
   const { name, category, company, color, priceRange, shipping } = filters;
 
   const allCategories = useMemo(
-    () => [...new Set(allProducts.map((p) => p.category))],
-    [allProducts]
+    () => [...new Set(allProductsArr.map((p) => p.category))],
+    [allProductsArr]
   );
   const allCompanies = useMemo(
-    () => [...new Set(allProducts.map((p) => p.company))],
-    [allProducts]
+    () => [...new Set(allProductsArr.map((p) => p.company))],
+    [allProductsArr]
   );
   const allColors = useMemo(
-    () => [...new Set(allProducts.map((p) => p.colors).flat())],
-    [allProducts]
+    () => [...new Set(allProductsArr.map((p) => p.colors).flat())],
+    [allProductsArr]
   );
 
   const priceRangeValue = priceRange ? priceRange : maxPrice;

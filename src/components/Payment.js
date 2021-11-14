@@ -74,11 +74,7 @@ const Payment = () => {
                 placeholder="Enter the above card number"
               />
             </div>
-            <button
-              id="submit"
-              disabled={processing || disabled || succeeded}
-              id="submit"
-            >
+            <button id="submit" disabled={processing || disabled || succeeded}>
               <span id="button-text">
                 {processing ? (
                   <div className="spinner" id="spinnier"></div>

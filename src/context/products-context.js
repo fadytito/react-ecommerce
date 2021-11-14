@@ -18,7 +18,7 @@ import productsReducer from "../reducers/products-reducer";
 import omitBy from "../utils/omitBy";
 
 const productsInitialValues = {
-  allProducts: [],
+  allProducts: {},
   filteredProducts: [],
   filters: {
     name: "",
@@ -47,9 +47,11 @@ const ProductsProvider = ({ children }) => {
     return urlFiltersObj;
   }, [search]);
 
+  const allProductsArr = Object.keys(allProducts).map((id) => allProducts[id]);
+
   const allPrices = useMemo(
-    () => allProducts.map((p) => p.price),
-    [allProducts]
+    () => allProductsArr.map((p) => p.price),
+    [allProductsArr]
   );
   const minPrice = useMemo(
     () => (allPrices.length ? Math.min(...allPrices) : 0),
@@ -77,10 +79,10 @@ const ProductsProvider = ({ children }) => {
   }, [urlFilters]);
 
   useEffect(() => {
-    if (allProducts.length) {
+    if (allProductsArr.length) {
       dispatchProducts({ type: FILTER_PRODUCTS, payload: filters });
     }
-  }, [allProducts, filters]);
+  }, [allProductsArr.length, filters]);
 
   const pushSearchQuery = useCallback(
     (query) => {
@@ -115,6 +117,7 @@ const ProductsProvider = ({ children }) => {
     <ProductsContext.Provider
       value={{
         products,
+        allProductsArr,
         minPrice,
         maxPrice,
         isLoading,

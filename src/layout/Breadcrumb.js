@@ -5,10 +5,10 @@ const Breadcrumb = ({ product, title }) => {
   return (
     <section className="breadcrumb">
       <div className="section-center">
-        <h3>
+        <h4>
           <Link to="/">Home</Link>
           {product && <Link to="/products">/ Products</Link>}/ {title}
-        </h3>
+        </h4>
       </div>
     </section>
   );
