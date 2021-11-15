@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from "react";
-import { FaCheck, FaSearch } from "react-icons/fa";
+import React, { useEffect, useMemo, useState } from "react";
+import { FaCheck } from "react-icons/fa";
 import { useProductsContext } from "../../context/products-context";
 import formatPrice from "./../../utils/format-price";
 
@@ -32,6 +32,8 @@ const Productsfilter = () => {
 
   const priceRangeValue = priceRange ? priceRange : maxPrice;
 
+  const [priceRangeVal, setPriceRangeVal] = useState(priceRangeValue);
+
   const inputChangeHandler = (e) => {
     const { name, value, checked } = e.target;
 
@@ -41,36 +43,47 @@ const Productsfilter = () => {
       shipping:
         name === "shipping" ? (!checked ? "all" : "free") : filters.shipping,
     };
+
     filtersChangeHandler(updatedFilters);
   };
 
-  const submitSearchHandler = (e) => {
-    e.preventDefault();
-    const updatedFilters = {
-      ...filters,
-      name: searchVal,
-    };
-    filtersChangeHandler(updatedFilters);
-  };
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      const updatedFilters = {
+        ...filters,
+        priceRange: priceRangeVal,
+      };
+      filtersChangeHandler(updatedFilters);
+    }, 1500);
+
+    return () => clearTimeout(timeout);
+  }, [priceRangeVal]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      const updatedFilters = {
+        ...filters,
+        name: searchVal,
+      };
+      filtersChangeHandler(updatedFilters);
+    }, 1500);
+
+    return () => clearTimeout(timeout);
+  }, [searchVal]);
 
   return (
     <section className="filters">
       <div className="content">
-        <form onSubmit={submitSearchHandler}>
-          <div className="form-control search-control">
-            <input
-              name="name"
-              type="text"
-              className="search-input"
-              placeholder="Search"
-              onChange={(e) => setSearchVal(e.target.value)}
-              value={searchVal}
-            />
-            <button className="search-btn">
-              <FaSearch />
-            </button>
-          </div>
-        </form>
+        <div className="form-control">
+          <input
+            name="name"
+            type="text"
+            className="search-input"
+            placeholder="Search"
+            onChange={(e) => setSearchVal(e.target.value)}
+            value={searchVal}
+          />
+        </div>
         <div className="form-control">
           <h5>category</h5>
           <div>
@@ -150,16 +163,16 @@ const Productsfilter = () => {
         </div>
         <div className="form-control">
           <h5>price</h5>
-          <p className="price">{formatPrice(priceRangeValue)}</p>
+          <p className="price">{formatPrice(priceRangeVal)}</p>
 
           <input
             type="range"
             name="priceRange"
             id="priceRange"
-            value={priceRangeValue}
+            value={priceRangeVal}
             min={minPrice}
             max={maxPrice}
-            onChange={inputChangeHandler}
+            onChange={(e) => setPriceRangeVal(e.target.value)}
           />
           <div>
             {formatPrice(minPrice)} - {formatPrice(maxPrice)}
