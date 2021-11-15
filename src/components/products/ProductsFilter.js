@@ -1,5 +1,5 @@
-import React, { useMemo } from "react";
-import { FaCheck } from "react-icons/fa";
+import React, { useMemo, useState } from "react";
+import { FaCheck, FaSearch } from "react-icons/fa";
 import { useProductsContext } from "../../context/products-context";
 import formatPrice from "./../../utils/format-price";
 
@@ -14,6 +14,8 @@ const Productsfilter = () => {
   } = useProductsContext();
 
   const { name, category, company, color, priceRange, shipping } = filters;
+
+  const [searchVal, setSearchVal] = useState(name);
 
   const allCategories = useMemo(
     () => [...new Set(allProductsArr.map((p) => p.category))],
@@ -42,19 +44,33 @@ const Productsfilter = () => {
     filtersChangeHandler(updatedFilters);
   };
 
+  const submitSearchHandler = (e) => {
+    e.preventDefault();
+    const updatedFilters = {
+      ...filters,
+      name: searchVal,
+    };
+    filtersChangeHandler(updatedFilters);
+  };
+
   return (
     <section className="filters">
       <div className="content">
-        <div className="form-control">
-          <input
-            name="name"
-            type="text"
-            className="search-input"
-            placeholder="Search"
-            value={name}
-            onChange={inputChangeHandler}
-          />
-        </div>
+        <form onSubmit={submitSearchHandler}>
+          <div className="form-control search-control">
+            <input
+              name="name"
+              type="text"
+              className="search-input"
+              placeholder="Search"
+              onChange={(e) => setSearchVal(e.target.value)}
+              value={searchVal}
+            />
+            <button className="search-btn">
+              <FaSearch />
+            </button>
+          </div>
+        </form>
         <div className="form-control">
           <h5>category</h5>
           <div>

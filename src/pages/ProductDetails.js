@@ -1,31 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useHistory, useParams } from "react-router";
 import { Error, Loading } from "../components";
 import AddToCart from "../components/cart/AddToCart";
 import { ProductImages } from "../components/products";
-import { useProductsContext } from "../context/products-context";
+import useFetch from "../hooks/useFetch";
 import { Breadcrumb } from "../layout";
 import ProductDetailsModel from "../models/ProductDetailsModel";
 import formatPrice from "../utils/format-price";
 
 const Productdetails = () => {
   const {
-    products: { allProducts },
+    data: product,
+    fetchData: fetchProduct,
     isLoading,
     error,
-  } = useProductsContext();
+  } = useFetch();
 
   const { id } = useParams();
   const { goBack } = useHistory();
 
+  useEffect(() => {
+    fetchProduct({ id });
+  }, [id, fetchProduct]);
+
   if (error) {
     return <Error />;
   }
-  if (isLoading) {
+  if (isLoading || !product) {
     return <Loading />;
   }
-
-  const product = allProducts[id];
 
   const formattedProduct = new ProductDetailsModel(
     product.name,
