@@ -1,0 +1,51 @@
+.reviews {
+  margin-top: 3rem;
+
+  .review-user-info {
+    display: flex;
+    font-weight: 600;
+    span {
+      color: $clr-grey-5;
+      margin-left: 4rem;
+    }
+  }
+
+  .date {
+    color: $clr-grey-6;
+  }
+
+  .review-form {
+    margin: 2rem 0;
+  }
+
+  .cancel-btn {
+      background-color: transparent;
+      color: $clr-grey-1;
+      border: none;
+      font-weight: bold;
+      font-size: 1rem;
+      padding: .5rem;
+      cursor: pointer;
+      margin-left: 1rem;
+  }
+}
+
+.rating {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    svg {
+        fill: #c7bc05
+    }
+
+    .rating-info {
+        color: $clr-grey-5;
+        font-size: 1rem;
+        margin-left: .5rem;
+        margin-top: -3px;
+    }
+}

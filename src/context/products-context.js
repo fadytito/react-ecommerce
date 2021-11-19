@@ -15,6 +15,7 @@ import {
 } from "../actions/products-actions";
 import useFetch from "../hooks/useFetch";
 import productsReducer from "../reducers/products-reducer";
+import { normalizeById } from "../utils/data-normalizer";
 import omitBy from "../utils/omitBy";
 
 const productsInitialValues = {
@@ -63,7 +64,11 @@ const ProductsProvider = ({ children }) => {
   );
 
   const loadProducts = useCallback((products) => {
-    dispatchProducts({ type: LOAD_PRODUCTS, payload: products });
+    const normalizedProducts = products.reduce(
+      (products, product) => normalizeById(products, product),
+      {}
+    );
+    dispatchProducts({ type: LOAD_PRODUCTS, payload: normalizedProducts });
   }, []);
 
   useEffect(() => {

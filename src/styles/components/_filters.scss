@@ -1,6 +1,6 @@
 .filters {
   .form-control {
-    margin-bottom: 0.5rem;
+    margin-bottom: .5rem;
     h5 {
       margin-bottom: 0.5rem;
     }
@@ -11,26 +11,7 @@
     border-radius: $radius;
     border-color: transparent;
     letter-spacing: $spacing;
-    outline: none !important;
-    width: 100%;
   }
-
-  .search-control {
-    position: relative;
-    background: $clr-grey-10;
-    padding-right: 2rem;
-    .search-btn {
-      position: absolute;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      padding: 0.5rem;
-      border: none;
-      cursor: pointer;
-      background-color: transparent;
-    }
-  }
-
   .search-input::placeholder {
     text-transform: capitalize;
   }
@@ -50,7 +31,7 @@
     & + label {
       display: inline-block;
       line-height: 1;
-      font-size: 0.85rem;
+      font-size: .85rem;
       padding: 0.25rem 0;
       text-transform: capitalize;
       background: transparent;
@@ -62,7 +43,7 @@
     }
   }
 
-  button:not(.search-btn) {
+  button {
     display: block;
     margin: 0.25em 0;
     padding: 0.25rem 0;
@@ -87,7 +68,7 @@
     display: flex;
     align-items: center;
   }
-
+  
   .all-btn {
     display: flex;
     align-items: center;

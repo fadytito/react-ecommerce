@@ -1,5 +1,6 @@
 class ProductDetailsModel {
-  constructor(name, description, images, price, company) {
+  constructor(product) {
+    const { name, description, images, price, company } = product;
     this.name = name;
     this.description = description;
     this.images = images;

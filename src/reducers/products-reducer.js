@@ -4,7 +4,6 @@ import {
   SORT_PRODUCTS,
   UPDATE_FILTERS,
 } from "../actions/products-actions";
-import { normalizeById } from "../utils/data-normalizer";
 
 const productsReducer = (state, action) => {
   const { type, payload } = action;
@@ -33,13 +32,9 @@ const productsReducer = (state, action) => {
   } else {
     switch (type) {
       case LOAD_PRODUCTS:
-        const normalizedProducts = payload.reduce(
-          (products, product) => normalizeById(products, product),
-          {}
-        );
         return {
           ...state,
-          allProducts: normalizedProducts,
+          allProducts: payload,
           filteredProducts: payload,
         };
       case FILTER_PRODUCTS:

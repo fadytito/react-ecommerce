@@ -4,6 +4,23 @@
     gap: 4rem;
     margin-top: 2rem;
   }
+
+  .product-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .bookmark-btn {
+      border: none;
+      background-color: transparent;
+      font-size: 1.5rem;
+      cursor: pointer;
+      line-height: 1;
+      svg {
+        fill: $clr-primary-4;
+      }
+    }
+  }
   .price {
     color: $clr-primary-5;
   }

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { FaCheck } from "react-icons/fa";
 import { useProductsContext } from "../../context/products-context";
 import formatPrice from "./../../utils/format-price";
@@ -15,8 +15,6 @@ const Productsfilter = () => {
 
   const { name, category, company, color, priceRange, shipping } = filters;
 
-  const [searchVal, setSearchVal] = useState(name);
-
   const allCategories = useMemo(
     () => [...new Set(allProductsArr.map((p) => p.category))],
     [allProductsArr]
@@ -32,8 +30,6 @@ const Productsfilter = () => {
 
   const priceRangeValue = priceRange ? priceRange : maxPrice;
 
-  const [priceRangeVal, setPriceRangeVal] = useState(priceRangeValue);
-
   const inputChangeHandler = (e) => {
     const { name, value, checked } = e.target;
 
@@ -47,30 +43,6 @@ const Productsfilter = () => {
     filtersChangeHandler(updatedFilters);
   };
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      const updatedFilters = {
-        ...filters,
-        priceRange: priceRangeVal,
-      };
-      filtersChangeHandler(updatedFilters);
-    }, 1500);
-
-    return () => clearTimeout(timeout);
-  }, [priceRangeVal]);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      const updatedFilters = {
-        ...filters,
-        name: searchVal,
-      };
-      filtersChangeHandler(updatedFilters);
-    }, 1500);
-
-    return () => clearTimeout(timeout);
-  }, [searchVal]);
-
   return (
     <section className="filters">
       <div className="content">
@@ -80,8 +52,8 @@ const Productsfilter = () => {
             type="text"
             className="search-input"
             placeholder="Search"
-            onChange={(e) => setSearchVal(e.target.value)}
-            value={searchVal}
+            onChange={inputChangeHandler}
+            value={name}
           />
         </div>
         <div className="form-control">
@@ -163,16 +135,16 @@ const Productsfilter = () => {
         </div>
         <div className="form-control">
           <h5>price</h5>
-          <p className="price">{formatPrice(priceRangeVal)}</p>
+          <p className="price">{formatPrice(priceRangeValue)}</p>
 
           <input
             type="range"
             name="priceRange"
             id="priceRange"
-            value={priceRangeVal}
+            value={priceRangeValue}
             min={minPrice}
             max={maxPrice}
-            onChange={(e) => setPriceRangeVal(e.target.value)}
+            onChange={inputChangeHandler}
           />
           <div>
             {formatPrice(minPrice)} - {formatPrice(maxPrice)}

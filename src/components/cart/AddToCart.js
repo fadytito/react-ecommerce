@@ -39,12 +39,7 @@ const AddToCart = ({ product }) => {
         />
         <button
           className="btn"
-          onClick={() =>
-            addItemHandler(
-              { ...product, id: product.id + color, color },
-              amount
-            )
-          }
+          onClick={() => addItemHandler({ ...product, color }, amount)}
         >
           add to cart
         </button>

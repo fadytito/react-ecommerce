@@ -2,8 +2,18 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Route, Switch } from "react-router";
 import "./App.scss";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { ProductProvider } from "./context/product-context";
 import { Footer, Header, Inners } from "./layout";
-import { About, Cart, Checkout, Home, Productdetails, Products } from "./pages";
+import {
+  About,
+  Cart,
+  Checkout,
+  Home,
+  Productdetails,
+  Products,
+  Wishlist,
+} from "./pages";
+import NotFound from "./pages/NotFound";
 
 function App() {
   const { isLoading, error } = useAuth0();
@@ -37,7 +47,9 @@ function App() {
                   <Products />
                 </Route>
                 <Route path="/products/:id">
-                  <Productdetails />
+                  <ProductProvider>
+                    <Productdetails />
+                  </ProductProvider>
                 </Route>
 
                 <Route path="/about">
@@ -49,8 +61,11 @@ function App() {
                 <ProtectedRoute path="/checkout">
                   <Checkout />
                 </ProtectedRoute>
+                <ProtectedRoute path="/wishlist">
+                  <Wishlist />
+                </ProtectedRoute>
                 <Route path="*">
-                  <h1>404</h1>
+                  <NotFound />
                 </Route>
               </Switch>
             </Inners>

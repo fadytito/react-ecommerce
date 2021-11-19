@@ -14,7 +14,9 @@ const cartRedeucer = (state, action) => {
   switch (type) {
     case ADD_ITEM:
       const { item, amount } = payload;
-      cartItem = state.find((cartItem) => cartItem.id === item.id);
+      cartItem = state.find(
+        (cartItem) => cartItem.id === item.id && cartItem.color === item.color
+      );
       if (cartItem) {
         if (cartItem.amount + amount >= MAX_ITEM_COUNT) {
           updatedCartItem = { ...cartItem, amount: MAX_ITEM_COUNT };
@@ -22,7 +24,10 @@ const cartRedeucer = (state, action) => {
           updatedCartItem = { ...cartItem, amount: cartItem.amount + amount };
         }
         updatedCart = state.map((cartItem) => {
-          if (cartItem.id === updatedCartItem.id) {
+          if (
+            cartItem.id === updatedCartItem.id &&
+            cartItem.color === updatedCartItem.color
+          ) {
             return updatedCartItem;
           } else {
             return cartItem;

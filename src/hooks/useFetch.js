@@ -7,12 +7,12 @@ const useFetch = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchData = useCallback(async (config, callback) => {
+  const fetchData = useCallback(async (id, callback) => {
     setIsLoading(true);
     setError(null);
     try {
-      if (config) {
-        const productDocRef = doc(db, "products", config.id);
+      if (id) {
+        const productDocRef = doc(db, "products", id);
         const docSnap = await getDoc(productDocRef);
         const product = docSnap.data();
         if (callback) {

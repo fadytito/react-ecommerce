@@ -2,6 +2,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { useCartContext } from "../context/cart-context";
+import { useUserContext } from "../context/user-context";
 import formatPrice from "../utils/format-price";
 
 const TEST_CARD_NUMBER = "4242 4242 4242 4242";
@@ -19,7 +20,8 @@ const Payment = () => {
 
   const history = useHistory();
 
-  const { clearCartHandler, total } = useCartContext();
+  const { cart, clearCartHandler, total } = useCartContext();
+  const { addOrder } = useUserContext();
 
   useEffect(() => {
     setDisabled(inputVal.length !== TEST_CARD_NUMBER.length);
@@ -44,6 +46,12 @@ const Payment = () => {
       setInputVal("");
       setTimeout(() => {
         clearCartHandler();
+        const formattedCart = cart.map(({ id, color, amount }) => ({
+          id,
+          color,
+          amount,
+        }));
+        addOrder(formattedCart);
         history.push("/");
       }, 3000);
     }, 1000);

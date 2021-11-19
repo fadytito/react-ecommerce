@@ -15,11 +15,10 @@ const CartSummary = () => {
           <h5>
             subtotal : <span>{formatPrice(subtotal)}</span>
           </h5>
-          {shipmentFee && (
-            <p>
-              shipping fee : <span>{formatPrice(shipmentFee)}</span>
-            </p>
-          )}
+          <p>
+            shipping fee :
+            <span>{shipmentFee > 0 ? formatPrice(shipmentFee) : "$" + 0}</span>
+          </p>
           <hr />
           <h4>
             order total : <span>{formatPrice(total)}</span>

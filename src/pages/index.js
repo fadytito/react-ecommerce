@@ -4,6 +4,7 @@ import Checkout from "./Checkout";
 import Home from "./Home";
 import Productdetails from "./ProductDetails";
 import Products from "./Products";
+import Wishlist from "./Wishlist";
 
-export { About, Home, Productdetails, Products, Cart, Checkout };
+export { About, Home, Productdetails, Products, Cart, Checkout, Wishlist };
 

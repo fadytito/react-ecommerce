@@ -5,16 +5,19 @@ import App from "./App";
 import Auth0ProviderWithHistory from "./auth/auth0-provider-with-history";
 import { CartProvider } from "./context/cart-context";
 import { ProductsProvider } from "./context/products-context";
+import { UserProvider } from "./context/user-context";
 import "./index.css";
 
 ReactDOM.render(
   <BrowserRouter>
     <Auth0ProviderWithHistory>
-      <ProductsProvider>
-        <CartProvider>
-          <App />
-        </CartProvider>
-      </ProductsProvider>
+      <UserProvider>
+        <ProductsProvider>
+          <CartProvider>
+            <App />
+          </CartProvider>
+        </ProductsProvider>
+      </UserProvider>
     </Auth0ProviderWithHistory>
   </BrowserRouter>,
   document.getElementById("root")

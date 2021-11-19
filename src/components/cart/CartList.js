@@ -15,7 +15,7 @@ const Cartlist = ({ cart }) => {
         <hr />
       </div>
       {cart.map((item) => (
-        <Cartitem key={item.id} item={item} />
+        <Cartitem key={item.id + item.color} item={item} />
       ))}
     </div>
   );
