@@ -45,10 +45,13 @@ const ReviewForm = ({ product, onCancel }) => {
     reviewTextRef.current.value = "";
   };
 
-  const updateSuccessHandler = useCallback((product) => {
-    setProduct(product);
-    onCancelRef.current();
-  }, []);
+  const updateSuccessHandler = useCallback(
+    (product) => {
+      setProduct(product);
+      onCancelRef.current();
+    },
+    [setProduct]
+  );
 
   useEffect(() => {}, [isLoading, updatedProduct]);
 
