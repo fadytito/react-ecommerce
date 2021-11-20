@@ -3,7 +3,6 @@ import { FaTimes } from "react-icons/fa";
 import logo from "../assets/logo.svg";
 import AuthenticationButton from "../components/login/AuthenticationButton";
 import Navbar from "../components/Navbar";
-import Cartbtn from "./../components/cart/CartBtn";
 
 const Sidebar = ({ isSidebarOpen, toggleSidbar }) => {
   return (
@@ -19,7 +18,6 @@ const Sidebar = ({ isSidebarOpen, toggleSidbar }) => {
         </div>
         <Navbar />
         <div className="header-btns-wrapper">
-          <Cartbtn />
           <AuthenticationButton />
         </div>
       </aside>

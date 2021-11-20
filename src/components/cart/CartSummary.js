@@ -1,5 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import React from "react";
+import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { useCartContext } from "../../context/cart-context";
 import formatPrice from "../../utils/format-price";
@@ -7,6 +8,9 @@ import formatPrice from "../../utils/format-price";
 const CartSummary = () => {
   const { subtotal, shipmentFee, total } = useCartContext();
   const { user, loginWithRedirect } = useAuth0();
+  const {
+    location: { pathname },
+  } = useHistory();
 
   return (
     <section className="cart-summary">
@@ -30,8 +34,13 @@ const CartSummary = () => {
             proceed to checkout
           </Link>
         ) : (
-          <button className="btn" onClick={() => loginWithRedirect()}>
-            Login
+          <button
+            className="btn"
+            onClick={() =>
+              loginWithRedirect({ appState: { returnTo: pathname } })
+            }
+          >
+            proceed to checkout
           </button>
         )}
       </div>

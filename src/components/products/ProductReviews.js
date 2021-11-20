@@ -1,28 +1,44 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState } from "react";
+import { useHistory } from "react-router";
 import { useUserContext } from "../../context/user-context";
 import ReviewForm from "./ReviewForm";
 
 const ProductReviews = React.forwardRef(({ product }, ref) => {
   const [isReviewForm, setIsReviewForm] = useState(false);
   const { myUser } = useUserContext();
+  const { loginWithRedirect } = useAuth0();
+
+  const {
+    location: { pathname },
+  } = useHistory();
   return (
     <section ref={ref} className="reviews">
       <h3>Reviews</h3>
-      {myUser && (
-        <div className="review-form">
-          {!isReviewForm && (
+
+      <div className="review-form">
+        {!isReviewForm &&
+          (myUser ? (
             <button className="btn" onClick={() => setIsReviewForm(true)}>
               add review
             </button>
-          )}
-          {isReviewForm && (
-            <ReviewForm
-              product={product}
-              onCancel={() => setIsReviewForm(false)}
-            />
-          )}
-        </div>
-      )}
+          ) : (
+            <button
+              className="btn"
+              onClick={() =>
+                loginWithRedirect({ appState: { returnTo: pathname } })
+              }
+            >
+              add review
+            </button>
+          ))}
+        {isReviewForm && (
+          <ReviewForm
+            product={product}
+            onCancel={() => setIsReviewForm(false)}
+          />
+        )}
+      </div>
 
       <div>
         {product.reviews.length > 0 ? (

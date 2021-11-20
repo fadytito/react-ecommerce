@@ -1,4 +1,7 @@
 .cart-item {
+  a {
+    color: $clr-grey-1 !important;
+  }
   .subtotal {
     display: none;
   }

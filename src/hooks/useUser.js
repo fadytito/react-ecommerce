@@ -38,12 +38,13 @@ const useUser = () => {
         const docSnap = await getDoc(userDocRef);
         const user = docSnap.data();
         setMyUser(user);
+        setIsLoading(false);
         if (user) return;
         setUser(userInfo);
       } catch (err) {
         setError(err.message);
+        setIsLoading(false);
       }
-      setIsLoading(false);
     },
     [setUser]
   );

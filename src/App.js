@@ -6,12 +6,13 @@ import { ProductProvider } from "./context/product-context";
 import { Footer, Header, Inners } from "./layout";
 import {
   About,
+  Bookmarks,
   Cart,
   Checkout,
   Home,
+  Orders,
   Productdetails,
   Products,
-  Wishlist,
 } from "./pages";
 import NotFound from "./pages/NotFound";
 
@@ -61,8 +62,11 @@ function App() {
                 <ProtectedRoute path="/checkout">
                   <Checkout />
                 </ProtectedRoute>
-                <ProtectedRoute path="/wishlist">
-                  <Wishlist />
+                <ProtectedRoute path="/bookmarks">
+                  <Bookmarks />
+                </ProtectedRoute>
+                <ProtectedRoute path="/orders">
+                  <Orders />
                 </ProtectedRoute>
                 <Route path="*">
                   <NotFound />

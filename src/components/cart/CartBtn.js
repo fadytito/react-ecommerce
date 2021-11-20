@@ -7,7 +7,7 @@ const Cartbtn = () => {
   const { itemsCount } = useCartContext();
   return (
     <Link to="/cart" className="cart-btn">
-      Cart
+      <label>Cart</label>
       <span className="cart-container">
         <FaShoppingCart />
         <span className="cart-value">{itemsCount}</span>

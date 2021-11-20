@@ -1,11 +1,19 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import React, { useEffect, useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { useHistory } from "react-router-dom";
 import { useUserContext } from "../../context/user-context";
 
 const Bookmark = ({ productId }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
 
+  const {
+    location: { pathname },
+  } = useHistory();
+
   const { myUser, toggleBookmark } = useUserContext();
+
+  const { loginWithRedirect } = useAuth0();
 
   const toggleBookmarkHandler = () => {
     setIsBookmarked((b) => !b);
@@ -22,8 +30,15 @@ const Bookmark = ({ productId }) => {
     }
   }, [myUser, productId]);
 
-  return (
+  return myUser ? (
     <button className="bookmark-btn" onClick={toggleBookmarkHandler}>
+      {isBookmarked ? <FaHeart /> : <FaRegHeart />}
+    </button>
+  ) : (
+    <button
+      className="bookmark-btn"
+      onClick={() => loginWithRedirect({ appState: { returnTo: pathname } })}
+    >
       {isBookmarked ? <FaHeart /> : <FaRegHeart />}
     </button>
   );

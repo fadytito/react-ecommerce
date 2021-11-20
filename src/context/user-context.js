@@ -30,8 +30,9 @@ const UserProvider = ({ children }) => {
         name: "orders",
         value: [
           {
+            id: new Date().valueOf(),
             items,
-            date: new Date(),
+            date: new Date().toLocaleDateString(),
           },
           ...orders,
         ],
@@ -59,7 +60,15 @@ const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ myUser, orders, addOrder, toggleBookmark, isLoading, error }}
+      value={{
+        myUser,
+        orders,
+        bookmarks,
+        addOrder,
+        toggleBookmark,
+        isLoading,
+        error,
+      }}
     >
       {children}
     </UserContext.Provider>
@@ -71,3 +80,4 @@ const useUserContext = () => {
 };
 
 export { UserProvider, useUserContext };
+

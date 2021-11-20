@@ -46,11 +46,15 @@ const Payment = () => {
       setInputVal("");
       setTimeout(() => {
         clearCartHandler();
-        const formattedCart = cart.map(({ id, color, amount }) => ({
-          id,
-          color,
-          amount,
-        }));
+        const formattedCart = cart.map(
+          ({ id, name, image, color, amount }) => ({
+            id,
+            name,
+            image,
+            color,
+            amount,
+          })
+        );
         addOrder(formattedCart);
         history.push("/");
       }, 3000);

@@ -28,9 +28,17 @@ const Header = () => {
           <Link to="/">
             <img src={logo} alt="comfy sloth" />
           </Link>
-          <button type="button" className="nav-toggle" onClick={toggleSidbar}>
-            <FaBars />
-          </button>
+          <div>
+            <div
+              className="header-btns-wrapper"
+              style={{ marginRight: "2rem" }}
+            >
+              <Cartbtn />
+            </div>
+            <button type="button" className="nav-toggle" onClick={toggleSidbar}>
+              <FaBars />
+            </button>
+          </div>
         </div>
         <Navbar />
         <div className="header-btns-wrapper">

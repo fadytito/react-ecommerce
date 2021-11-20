@@ -21,6 +21,16 @@
       width: 175px;
       margin-left: -15px;
     }
+
+    .header-btns-wrapper {
+      display: flex;
+    }
+
+    .cart-btn {
+      label {
+        display: none;
+      }
+    }
   }
   .nav-toggle {
     background: transparent;
@@ -41,6 +51,11 @@
     display: none;
   }
   @media (min-width: 992px) {
+    .nav-header {
+      .header-btns-wrapper {
+        display: none;
+      }
+    }
     .nav-toggle {
       display: none;
     }
