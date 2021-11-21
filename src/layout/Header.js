@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
-import logo from "../assets/logo.jpg";
+import logo from "../assets/logo.png";
 import AuthenticationButton from "../components/login/AuthenticationButton";
 import Navbar from "../components/Navbar";
 import Cartbtn from "./../components/cart/CartBtn";
