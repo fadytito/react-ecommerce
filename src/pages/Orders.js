@@ -18,7 +18,7 @@ const Orders = () => {
     return (
       <React.Fragment>
         <Breadcrumb title="Orders" />
-        <div className="orders-page page-100">
+        <div className="orders-page">
           <div className="empty">
             <h2>You have no orders!</h2>
             <Link to="/products" className="btn">

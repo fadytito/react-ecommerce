@@ -23,9 +23,9 @@ const Bookmarks = () => {
     return (
       <React.Fragment>
         <Breadcrumb title="Bookmarks" />
-        <div className="bookmarks-page page-100">
+        <div className="bookmarks-page">
           <div className="empty">
-            <h2>You haven't bookmarked any item yet!</h2>
+            <h2>You have no bookmarks yet!</h2>
             <Link to="/products" className="btn">
               add your first bookmark
             </Link>
