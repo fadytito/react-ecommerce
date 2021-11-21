@@ -18,8 +18,8 @@
     align-items: center;
     justify-content: space-between;
     img {
-      width: 175px;
-      margin-left: -15px;
+      display: block;
+      height: 55px;
     }
 
     .header-btns-wrapper {
@@ -61,7 +61,7 @@
     }
     .nav-center {
       display: grid;
-      grid-template-columns: auto 1fr auto auto;
+      grid-template-columns: 1fr 4fr 1fr 0fr;
       align-items: center;
     }
     .nav-links {

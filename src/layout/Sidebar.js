@@ -1,6 +1,6 @@
 import React from "react";
 import { FaTimes } from "react-icons/fa";
-import logo from "../assets/logo.svg";
+import logo from "../assets/logo.jpg";
 import AuthenticationButton from "../components/login/AuthenticationButton";
 import Navbar from "../components/Navbar";
 
