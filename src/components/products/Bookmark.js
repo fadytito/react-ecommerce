@@ -11,7 +11,7 @@ const Bookmark = ({ productId }) => {
     location: { pathname },
   } = useHistory();
 
-  const { myUser, toggleBookmark } = useUserContext();
+  const { myUser, toggleBookmark, error } = useUserContext();
 
   const { loginWithRedirect } = useAuth0();
 
@@ -28,7 +28,7 @@ const Bookmark = ({ productId }) => {
     } else {
       setIsBookmarked(false);
     }
-  }, [myUser, productId]);
+  }, [myUser, productId, error]);
 
   return myUser ? (
     <button className="bookmark-btn" onClick={toggleBookmarkHandler}>

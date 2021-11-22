@@ -20,7 +20,7 @@ const Orders = () => {
         <Breadcrumb title="Orders" />
         <div className="orders-page">
           <div className="empty">
-            <h2>You have no orders!</h2>
+            <h2>You have no orders yet!</h2>
             <Link to="/products" className="btn">
               make your first order
             </Link>

@@ -23,10 +23,11 @@ const useUser = () => {
       const docSnap = await getDoc(userDocRef);
       const user = docSnap.data();
       setMyUser(user);
+      setIsLoading(false);
     } catch (err) {
       setError(err.message);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, []);
 
   const getMyUser = useCallback(
@@ -35,6 +36,7 @@ const useUser = () => {
       setError(null);
       try {
         const userDocRef = doc(db, "users", userInfo.sub);
+        await getDoc(userDocRef);
         const docSnap = await getDoc(userDocRef);
         const user = docSnap.data();
         setMyUser(user);
@@ -55,14 +57,16 @@ const useUser = () => {
       setError(null);
       try {
         const userDocRef = doc(db, "users", myUser.id);
+        await getDoc(userDocRef);
         await updateDoc(userDocRef, { [prop.name]: prop.value });
         const docSnap = await getDoc(userDocRef);
         const user = docSnap.data();
         setMyUser(user);
+        setIsLoading(false);
       } catch (err) {
         setError(err.message);
+        setIsLoading(false);
       }
-      setIsLoading(false);
     },
     [myUser]
   );

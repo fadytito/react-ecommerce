@@ -196,3 +196,8 @@ p {
     text-transform: none;
   }
 }
+
+.error-msg {
+  margin-top: 1rem;
+  color: $clr-error
+}

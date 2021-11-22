@@ -7,8 +7,7 @@ import { useUserContext } from "../../context/user-context";
 const ReviewForm = ({ product, onCancel }) => {
   const reviewTextRef = useRef();
   const ratingRef = useRef();
-  const { updateProduct, updatedProduct, isLoading, error, setProduct } =
-    useProductContext();
+  const { updateProduct, isLoading, error, setProduct } = useProductContext();
 
   const {
     myUser: { name },
@@ -42,7 +41,6 @@ const ReviewForm = ({ product, onCancel }) => {
       },
       updateSuccessHandler
     );
-    reviewTextRef.current.value = "";
   };
 
   const updateSuccessHandler = useCallback(
@@ -53,7 +51,11 @@ const ReviewForm = ({ product, onCancel }) => {
     [setProduct]
   );
 
-  useEffect(() => {}, [isLoading, updatedProduct]);
+  useEffect(() => {
+    if (!error && !isLoading) {
+      reviewTextRef.current.value = "";
+    }
+  }, [error, isLoading]);
 
   return (
     <form onSubmit={submitHandler}>
@@ -88,7 +90,9 @@ const ReviewForm = ({ product, onCancel }) => {
           cancel
         </button>
       </div>
-      {error && <p>something went wrong, please try again!</p>}
+      {error && (
+        <p className="error-msg">Something went wrong, please try again!</p>
+      )}
     </form>
   );
 };

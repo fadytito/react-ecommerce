@@ -12,6 +12,7 @@ const useUpdateProduct = () => {
     setError(null);
     try {
       const productDocRef = doc(db, "products", id);
+      await getDoc(productDocRef);
       await updateDoc(productDocRef, { ...updates });
       const docSnap = await getDoc(productDocRef);
       const product = docSnap.data();

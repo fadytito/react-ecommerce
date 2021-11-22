@@ -21,7 +21,7 @@ const Payment = () => {
   const history = useHistory();
 
   const { cart, clearCartHandler, total } = useCartContext();
-  const { addOrder } = useUserContext();
+  const { addOrder, error } = useUserContext();
 
   useEffect(() => {
     setDisabled(inputVal.length !== TEST_CARD_NUMBER.length);
@@ -42,28 +42,32 @@ const Payment = () => {
         return;
       }
       setIsInvalidNumber(false);
-      setSucceeded(true);
-      setInputVal("");
-      setTimeout(() => {
-        clearCartHandler();
-        const formattedCart = cart.map(
-          ({ id, name, image, color, amount }) => ({
-            id,
-            name,
-            image,
-            color,
-            amount,
-          })
-        );
-        addOrder(formattedCart);
-        history.push("/");
-      }, 3000);
+      const formattedCart = cart.map(({ id, name, image, color, amount }) => ({
+        id,
+        name,
+        image,
+        color,
+        amount,
+      }));
+      addOrder(formattedCart);
     }, 1000);
   };
 
+  useEffect(() => {
+    if (!error && !disabled) {
+      setSucceeded(true);
+      setInputVal("");
+      setTimeout(() => {
+        console.log(error);
+        history.push("/");
+        clearCartHandler();
+      }, 3000);
+    }
+  }, [error]);
+
   return (
     <div className="payment">
-      {succeeded ? (
+      {succeeded && !error ? (
         <article>
           <h4>Thank you!</h4>
           <h4>Your payment was successful!</h4>
@@ -101,6 +105,9 @@ const Payment = () => {
               </div>
             )}
           </form>
+          {error && (
+            <p className="error-msg">Something went wrong, please try again!</p>
+          )}
         </div>
       )}
     </div>
