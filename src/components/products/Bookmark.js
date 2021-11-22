@@ -7,11 +7,12 @@ import { useUserContext } from "../../context/user-context";
 const Bookmark = ({ productId }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
 
+  const { myUser, toggleBookmark, error } = useUserContext();
+
   const {
     location: { pathname },
   } = useHistory();
 
-  const { myUser, toggleBookmark, error } = useUserContext();
 
   const { loginWithRedirect } = useAuth0();
 

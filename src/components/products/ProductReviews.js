@@ -7,11 +7,11 @@ import ReviewForm from "./ReviewForm";
 const ProductReviews = React.forwardRef(({ product }, ref) => {
   const [isReviewForm, setIsReviewForm] = useState(false);
   const { myUser } = useUserContext();
-  const { loginWithRedirect } = useAuth0();
-
   const {
     location: { pathname },
   } = useHistory();
+  const { loginWithRedirect } = useAuth0();
+
   return (
     <section ref={ref} className="reviews">
       <h3>Reviews</h3>

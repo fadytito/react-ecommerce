@@ -1,5 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router";
 import { useCartContext } from "../context/cart-context";
 import { useUserContext } from "../context/user-context";
@@ -14,18 +14,18 @@ const Payment = () => {
   const [inputVal, setInputVal] = useState("");
   const [isInvalidNumber, setIsInvalidNumber] = useState(false);
 
+  const { cart, clearCartHandler, total } = useCartContext();
+  const { addOrder, myUser, error } = useUserContext();
+
   const {
     user: { nickname },
   } = useAuth0();
 
   const history = useHistory();
 
-  const { cart, clearCartHandler, total } = useCartContext();
-  const { addOrder, error } = useUserContext();
+  const submitted = useRef(false);
 
-  useEffect(() => {
-    setDisabled(inputVal.length !== TEST_CARD_NUMBER.length);
-  }, [inputVal]);
+  const { orders } = myUser;
 
   const changeHandler = (e) => {
     setInputVal(e.target.value);
@@ -49,24 +49,28 @@ const Payment = () => {
         color,
         amount,
       }));
+      submitted.current = true;
       addOrder(formattedCart);
     }, 1000);
   };
 
   useEffect(() => {
-    if (!error && !disabled) {
+    setDisabled(inputVal.length !== TEST_CARD_NUMBER.length);
+  }, [inputVal]);
+
+  useEffect(() => {
+    if (!error && submitted.current) {
       setSucceeded(true);
-      setInputVal("");
       setTimeout(() => {
         history.push("/");
         clearCartHandler();
       }, 3000);
     }
-  }, [error, disabled, clearCartHandler, history]);
+  }, [orders, error, clearCartHandler, history]);
 
   return (
     <div className="payment">
-      {succeeded && !error ? (
+      {succeeded ? (
         <article>
           <h4>Thank you!</h4>
           <h4>Your payment was successful!</h4>

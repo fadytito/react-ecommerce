@@ -5,15 +5,13 @@ import { useProductContext } from "../../context/product-context";
 import { useUserContext } from "../../context/user-context";
 
 const ReviewForm = ({ product, onCancel }) => {
-  const reviewTextRef = useRef();
-  const ratingRef = useRef();
   const { updateProduct, isLoading, error, setProduct } = useProductContext();
-
   const {
     myUser: { name },
     orders,
   } = useUserContext();
-
+  const reviewTextRef = useRef();
+  const ratingRef = useRef();
   const onCancelRef = useRef();
   onCancelRef.current = onCancel;
 

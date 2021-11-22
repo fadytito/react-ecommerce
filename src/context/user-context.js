@@ -5,24 +5,10 @@ import useUser from "../hooks/useUser";
 const UserContext = React.createContext();
 
 const UserProvider = ({ children }) => {
-  const { user } = useAuth0();
-
-  const { myUser, getMyUser, updateMyUser, isLoading, error } = useUser();
-
   const [orders, setOrders] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
-
-  useEffect(() => {
-    if (!user) return;
-    getMyUser(user);
-  }, [user, getMyUser]);
-
-  useEffect(() => {
-    if (!myUser) return;
-    const { orders, bookmarks } = myUser;
-    setOrders(orders);
-    setBookmarks(bookmarks);
-  }, [myUser]);
+  const { myUser, getMyUser, updateMyUser, isLoading, error } = useUser();
+  const { user } = useAuth0();
 
   const addOrder = useCallback(
     (items) => {
@@ -57,6 +43,18 @@ const UserProvider = ({ children }) => {
     },
     [updateMyUser, bookmarks]
   );
+
+  useEffect(() => {
+    if (!user) return;
+    getMyUser(user);
+  }, [user, getMyUser]);
+
+  useEffect(() => {
+    if (!myUser) return;
+    const { orders, bookmarks } = myUser;
+    setOrders(orders);
+    setBookmarks(bookmarks);
+  }, [myUser]);
 
   return (
     <UserContext.Provider

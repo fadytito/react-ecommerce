@@ -4,11 +4,11 @@ import { useCartContext } from "../../context/cart-context";
 import AmountController from "./AmountController";
 
 const AddToCart = ({ product }) => {
-  const [amount, setAmount] = useState(1);
   const { colors } = product;
+  const [amount, setAmount] = useState(1);
   const [color, setColor] = useState(colors[0]);
   const { addItemHandler } = useCartContext();
-
+  
   return (
     <section className="addtocart">
       <div className="info">

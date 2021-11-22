@@ -28,8 +28,6 @@ const Productsfilter = () => {
     [allProductsArr]
   );
 
-  const priceRangeValue = priceRange ? priceRange : maxPrice;
-
   const inputChangeHandler = (e) => {
     const { name, value, checked } = e.target;
 
@@ -42,6 +40,8 @@ const Productsfilter = () => {
 
     filtersChangeHandler(updatedFilters);
   };
+
+  const priceRangeValue = priceRange ? priceRange : maxPrice;
 
   return (
     <section className="filters">

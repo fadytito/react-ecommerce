@@ -4,13 +4,12 @@ import { useProductsContext } from "../../context/products-context";
 import PRODUCTS_SORT_OPTIONS from "./../../constants/products-constants";
 
 const ProductsSearchHeader = ({ productsCount, sortingVal, onViewChange }) => {
-  const { sortingChangeHandler } = useProductsContext();
-  const onViewChangeRef = useRef();
-  onViewChangeRef.current = onViewChange;
-
   const [isList, setIsList] = useState(() =>
     JSON.parse(localStorage.getItem("isListView"))
   );
+  const { sortingChangeHandler } = useProductsContext();
+  const onViewChangeRef = useRef();
+  onViewChangeRef.current = onViewChange;
 
   const sortingDropdownOptionsArr = useMemo(
     () =>

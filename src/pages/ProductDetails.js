@@ -13,6 +13,7 @@ import ProductDetailsModel from "../models/ProductDetailsModel";
 import formatPrice from "../utils/format-price";
 
 const Productdetails = () => {
+  const { updatedProduct } = useProductContext();
   const {
     data: product,
     setData: setProduct,
@@ -20,8 +21,6 @@ const Productdetails = () => {
     isLoading,
     error,
   } = useFetch();
-
-  const { updatedProduct } = useProductContext();
 
   const { id } = useParams();
   const { goBack } = useHistory();

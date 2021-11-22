@@ -7,10 +7,10 @@ import formatPrice from "../../utils/format-price";
 
 const CartSummary = () => {
   const { subtotal, shipmentFee, total } = useCartContext();
-  const { user, loginWithRedirect } = useAuth0();
   const {
     location: { pathname },
   } = useHistory();
+  const { user, loginWithRedirect } = useAuth0();
 
   return (
     <section className="cart-summary">

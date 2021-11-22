@@ -25,10 +25,6 @@ const CartProvider = ({ children }) => {
       : cartInitialValue
   );
 
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
-
   const itemsCount = useMemo(
     () => cart.reduce((acc, item) => acc + item.amount, 0),
     [cart]
@@ -68,12 +64,13 @@ const CartProvider = ({ children }) => {
     [dispatchCart]
   );
 
-  const clearCartHandler = useCallback(
-    (item) => {
-      dispatchCart({ type: CLEAR_CART });
-    },
-    [dispatchCart]
-  );
+  const clearCartHandler = useCallback(() => {
+    dispatchCart({ type: CLEAR_CART });
+  }, [dispatchCart]);
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
 
   return (
     <CartContext.Provider

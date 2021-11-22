@@ -4,11 +4,12 @@ import { FaUserPlus } from "react-icons/fa";
 import { useHistory } from "react-router";
 
 const LoginButton = () => {
-  const { loginWithRedirect } = useAuth0();
-
   const {
     location: { pathname },
   } = useHistory();
+
+  const { loginWithRedirect } = useAuth0();
+
   return (
     <button
       className="auth-btn"

@@ -9,13 +9,12 @@ import { useProductsContext } from "../context/products-context";
 import { Breadcrumb } from "../layout";
 
 const Products = () => {
+  const [isList, setIsList] = useState();
   const {
     products: { filteredProducts, sortingVal },
     isLoading,
     error,
   } = useProductsContext();
-
-  const [isList, setIsList] = useState();
 
   const productsCount = filteredProducts.length;
 
