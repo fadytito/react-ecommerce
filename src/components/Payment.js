@@ -58,12 +58,11 @@ const Payment = () => {
       setSucceeded(true);
       setInputVal("");
       setTimeout(() => {
-        console.log(error);
         history.push("/");
         clearCartHandler();
       }, 3000);
     }
-  }, [error]);
+  }, [error, disabled, clearCartHandler, history]);
 
   return (
     <div className="payment">
