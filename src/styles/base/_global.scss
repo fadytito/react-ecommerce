@@ -201,3 +201,7 @@ p {
   margin-top: 1rem;
   color: $clr-error
 }
+
+textarea {
+  max-width: 100% !important;
+}
